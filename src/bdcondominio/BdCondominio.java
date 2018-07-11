@@ -5,6 +5,7 @@
  */
 package bdcondominio;
 
+import java.sql.SQLException;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -40,6 +41,17 @@ public class BdCondominio extends Application {
        Button iniciarSesion = new Button("Iniciar Sesión");
        p.setSpacing(20);
        p.getChildren().addAll(new HBox(10, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
+       
+       iniciarSesion.setOnAction(e ->{
+           try{
+            UsuarioDB.conectar();
+            UsuarioDB.consultarUsuario(cuadroUsuario.getText(), cuadroContra.getText());
+            UsuarioDB.close();
+           }catch(SQLException ex){
+                System.out.println(ex.getMessage());
+            }
+       });
+       
     }
     
     public static void main(String[] args) { 

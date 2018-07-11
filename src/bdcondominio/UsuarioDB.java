@@ -6,7 +6,9 @@
 package bdcondominio;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
@@ -16,22 +18,35 @@ import java.sql.Statement;
  */
 public class UsuarioDB {
     
-    String usuario;
-    String password;
+    static String usuario;
+    static String pass;
+    static Connection connection;
     
-    public UsuarioDB(String usuario, String password){
-        this.usuario = usuario;
-        this.password = password;
+    
+    public static void conectar() throws SQLException {
+        String url = "jdbc:mysql://localhost:3306/kenastdb";
+        String username = "root";
+        String password = "";
+        connection = DriverManager.getConnection(url, username, password);
     }
     
-    public void conectar() {
-        String url = "jdbc:mysql://localhost:3306/kenastDB";
-        String username = "root";
-        String password = "contraseña";
-        try(Connection connection = DriverManager.getConnection(url, username, password);){
-            Statement statement = connection.createStatement();
-        }catch(SQLException ex){
+    public static boolean consultarUsuario(String usuario, String password) throws SQLException {
+        String consulta = "SELECT users, passwords "
+                         +"FROM LOGIN"
+                         +"WHERE user = " + usuario + " AND password = " + password;
         
+        Statement statement = connection.createStatement();
+        ResultSet rs  = statement.executeQuery(consulta);
+        System.out.println(rs.getString(0)); 
+        return true;
+    }
+    
+    public static boolean close() {
+        try {
+            connection.close();
+        } catch (SQLException ex) {
+            return false;
         }
+        return true;
     }
 }
