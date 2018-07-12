@@ -25,7 +25,7 @@ public class UsuarioDB {
     public static void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/kenastdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String username = "root";
-        String password = "";
+        String password = "aqui";
         Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);
     }
