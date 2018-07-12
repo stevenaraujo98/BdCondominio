@@ -6,6 +6,8 @@
 package bdcondominio;
 
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.scene.Scene;
@@ -23,35 +25,51 @@ import javafx.stage.Stage;
  * @author SSAM
  */
 public class BdCondominio extends Application {
+    
+    @Override
+    public void init() {
+        try{
+            UsuarioDB.conectar();
+        }catch(SQLException ex){
+            System.out.println("Error de conexion");
+            System.out.println(ex.getMessage());
+        } catch (ClassNotFoundException ex) { 
+            Logger.getLogger(BdCondominio.class.getName()).log(Level.SEVERE, null, ex);
+        } 
+    }
 
     @Override
     public void start(Stage stage) throws Exception {
-       VBox p = new VBox();  
-       
-//       Image i = new Image("kenast.png", 100, 70, true, true);
-//       ImageView iv = new ImageView(i);
-       Scene scene = new Scene(p, 300, 250);
-       p.setPadding(new Insets(20, 20, 20, 20));
-       stage.setScene(scene); 
-       stage.show();
-       Label user = new Label("Usuario");
-       Label cont = new Label("Contraseña");
-       TextField cuadroUsuario = new TextField();
-       TextField cuadroContra = new TextField();
-       Button iniciarSesion = new Button("Iniciar Sesión");
-       p.setSpacing(20);
-       p.getChildren().addAll(new HBox(10, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
-       
-       iniciarSesion.setOnAction(e ->{
-           try{
-            UsuarioDB.conectar();
-            UsuarioDB.consultarUsuario(cuadroUsuario.getText(), cuadroContra.getText());
-            UsuarioDB.close();
-           }catch(SQLException ex){
+        VBox p = new VBox();  
+
+    //       Image i = new Image("kenast.png", 100, 70, true, true);
+    //       ImageView iv = new ImageView(i);
+        Scene scene = new Scene(p, 300, 250);
+        p.setPadding(new Insets(20, 20, 20, 20));
+        stage.setScene(scene); 
+        stage.show();
+        Label user = new Label("Usuario");
+        Label cont = new Label("Contraseña");
+        TextField cuadroUsuario = new TextField();
+        TextField cuadroContra = new TextField();
+        Button iniciarSesion = new Button("Iniciar Sesión");
+        p.setSpacing(20);
+        p.getChildren().addAll(new HBox(10, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
+
+        iniciarSesion.setOnAction(e ->{
+            try {
+                UsuarioDB.consultarUsuario("\""+cuadroUsuario.getText()+"\"", "\""+cuadroContra.getText()+"\"");
+            } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
+                Logger.getLogger(BdCondominio.class.getName()).log(Level.SEVERE, null, ex);
             }
-       });
+        });
        
+    }
+    
+    @Override
+    public void stop() {
+        UsuarioDB.close();
     }
     
     public static void main(String[] args) { 
