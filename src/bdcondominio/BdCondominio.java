@@ -45,8 +45,8 @@ public class BdCondominio extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         VBox p = new VBox();  
-
-        ImageView iv = new ImageView(new Image(BdCondominio.class.getResourceAsStream("kenast.png"), 100, 70, true, true));
+        stage.setTitle("Inicio de Sesión");
+        ImageView iv = new ImageView(new Image(BdCondominio.class.getResourceAsStream("kenast.png"), 200, 150, true, true));
         Scene scene = new Scene(p, 300, 250);
         p.setPadding(new Insets(20, 20, 20, 20));
         stage.setScene(scene); 
@@ -59,10 +59,14 @@ public class BdCondominio extends Application {
         p.setSpacing(20);
         p.setAlignment(Pos.CENTER);
         p.getChildren().addAll(iv, new HBox(30, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
-
+        ((HBox)p.getChildren().get(1)).setAlignment(Pos.CENTER); 
+        ((HBox)p.getChildren().get(2)).setAlignment(Pos.CENTER); 
+        
         iniciarSesion.setOnAction(e ->{
             try {
                 UsuarioDB.consultarUsuario("\""+cuadroUsuario.getText()+"\"", "\""+cuadroContra.getText()+"\"");
+                cuadroUsuario.setText("");
+                cuadroContra.setText(""); 
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
                 Logger.getLogger(BdCondominio.class.getName()).log(Level.SEVERE, null, ex);

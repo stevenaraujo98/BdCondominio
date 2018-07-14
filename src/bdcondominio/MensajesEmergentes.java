@@ -21,4 +21,12 @@ public class MensajesEmergentes {
 
         alert.showAndWait();
     }
+    
+    public static void accessSuccessful(Usuario usuario) {
+        Alert alert = new Alert(AlertType.INFORMATION);
+        alert.setTitle("Acceso exitoso"); 
+        alert.setHeaderText("Usted se ha ingresado con el usuario: " + usuario.getUser());
+        alert.setContentText("Bienbenido(a): " + usuario.getName() + " " + usuario.getLastname()); 
+        alert.showAndWait();
+    }
 }
