@@ -20,12 +20,14 @@ public class UsuarioDB {
     private static String usuario;
     private static String pass;
     private static Connection connection;
-    
+
+    private UsuarioDB() {
+    }    
     
     public static void conectar() throws SQLException, ClassNotFoundException {
         String url = "jdbc:mysql://localhost:3306/kenastdb?useUnicode=true&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=UTC";
         String username = "root";
-        String password = "aqui";
+        String password = "root";
         Class.forName("com.mysql.jdbc.Driver");
         connection = DriverManager.getConnection(url, username, password);
     }
@@ -39,8 +41,10 @@ public class UsuarioDB {
         ResultSet rs  = statement.executeQuery(consulta);
         if(rs == null)
             return false;
-        while(rs.next())
-            System.out.println(rs.getString(1) + "|" + rs.getString(2));  
+        if(rs.next())
+            System.out.println(rs.getString(1) + "|" + rs.getString(2));
+        else
+            MensajesEmergentes.errorLog();
         return true;
     }
     

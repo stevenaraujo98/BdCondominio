@@ -10,10 +10,14 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javafx.application.Application;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
@@ -42,8 +46,7 @@ public class BdCondominio extends Application {
     public void start(Stage stage) throws Exception {
         VBox p = new VBox();  
 
-    //       Image i = new Image("kenast.png", 100, 70, true, true);
-    //       ImageView iv = new ImageView(i);
+        ImageView iv = new ImageView(new Image(BdCondominio.class.getResourceAsStream("kenast.png"), 100, 70, true, true));
         Scene scene = new Scene(p, 300, 250);
         p.setPadding(new Insets(20, 20, 20, 20));
         stage.setScene(scene); 
@@ -51,10 +54,11 @@ public class BdCondominio extends Application {
         Label user = new Label("Usuario");
         Label cont = new Label("Contraseña");
         TextField cuadroUsuario = new TextField();
-        TextField cuadroContra = new TextField();
+        PasswordField cuadroContra = new PasswordField();
         Button iniciarSesion = new Button("Iniciar Sesión");
         p.setSpacing(20);
-        p.getChildren().addAll(new HBox(10, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
+        p.setAlignment(Pos.CENTER);
+        p.getChildren().addAll(iv, new HBox(30, user, cuadroUsuario), new HBox(10, cont, cuadroContra), iniciarSesion);
 
         iniciarSesion.setOnAction(e ->{
             try {
