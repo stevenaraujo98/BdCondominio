@@ -30,7 +30,7 @@ public class UsuarioDB {
         connection = DriverManager.getConnection(url, username, password);
     }
     
-    public static boolean consultarUsuario(String usuario, String password) throws SQLException {
+    public static Usuario consultarUsuario(String usuario, String password) throws SQLException {
         String consulta = "SELECT users, passwords, Nombre, Apellido  "
                          +"FROM LOGIN l, HABITANTE h "
                          +"WHERE users = " + usuario + " AND passwords = " + password + " "
@@ -39,14 +39,15 @@ public class UsuarioDB {
         Statement statement = connection.createStatement();
         ResultSet rs  = statement.executeQuery(consulta);
         if(rs == null)
-            return false;
+            return null;
+        Usuario user = null;
         if(rs.next()){
             System.out.println(rs.getString(1) + "|" + rs.getString(2));
-            MensajesEmergentes.accessSuccessful(
-                    new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4))); 
+            user = new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            MensajesEmergentes.accessSuccessful(user); 
         }else
             MensajesEmergentes.errorLog();
-        return true;
+        return user;
     }
     
     public static boolean close() {
