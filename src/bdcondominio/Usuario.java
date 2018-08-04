@@ -15,16 +15,18 @@ public class Usuario {
     private String password;
     private String name;
     private String lastname;
+    private String tipo;
 
     public Usuario(String user, String password) {
         this.user = user;
         this.password = password;
     }
 
-    public Usuario(String user, String password, String name, String lastname) {
+    public Usuario(String user, String password, String name, String lastname, String tipo) {
         this(user, password);
         this.name = name;
         this.lastname = lastname;
+        this.tipo = tipo;
     }
     
     public String getUser() {
@@ -58,5 +60,15 @@ public class Usuario {
     public void setLastname(String lastname) {
         this.lastname = lastname;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
+    
   
 }

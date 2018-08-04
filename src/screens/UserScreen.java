@@ -13,13 +13,12 @@ import javafx.stage.Stage;
  *
  * 
  */
-public class AdminScreen {
-    
-    private AdminPane adminPane;
+public class UserScreen {
+    private UserPane userPane;
     private final Usuario user;
     private final Stage stage;
     
-    public AdminScreen(Usuario user) {
+    public UserScreen(Usuario user) {
         this.user = user;
         stage = new Stage();
         start();
@@ -27,11 +26,11 @@ public class AdminScreen {
 
    
     private void start() {
-        adminPane = new AdminPane(stage, user); 
-        Scene scene = new Scene(adminPane.getPane(), Const.MAX_WIDTH, Const.MAX_HEIGHT);
+        userPane = new UserPane(stage, user); 
+        Scene scene = new Scene(userPane.getPane(), Const.MAX_WIDTH, Const.MAX_HEIGHT);
         stage.setScene(scene);
         stage.setMaximized(true); 
-        stage.setTitle("Admin - Home"); 
+        stage.setTitle("User - Home"); 
     }
     
     public void show() {

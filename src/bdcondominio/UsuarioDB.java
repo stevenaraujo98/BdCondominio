@@ -31,19 +31,20 @@ public class UsuarioDB {
     }
     
     public static Usuario consultarUsuario(String usuario, String password) throws SQLException {
-        String consulta = "SELECT users, passwords, Nombre, Apellido  "
-                         +"FROM LOGIN l, HABITANTE h "
-                         +"WHERE users = " + usuario + " AND passwords = " + password + " "
-                         +"AND l.idhabitante = h.idhabitante";
+//        String consulta = "SELECT users, passwords, Nombre, Apellido  "
+//                         +"FROM LOGIN l, HABITANTE h "
+//                         +"WHERE users = " + usuario + " AND passwords = " + password + " "
+//                         +"AND l.idhabitante = h.idhabitante";
+        String call = "CALL LOGINAPP (" + usuario + ", " + password + ")";
         
         Statement statement = connection.createStatement();
-        ResultSet rs  = statement.executeQuery(consulta);
+        ResultSet rs  = statement.executeQuery(call);
         if(rs == null)
             return null;
         Usuario user = null;
         if(rs.next()){
             System.out.println(rs.getString(1) + "|" + rs.getString(2));
-            user = new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4));
+            user = new Usuario(rs.getString(1), rs.getString(2), rs.getString(3), rs.getString(4), rs.getString(5)); 
             MensajesEmergentes.accessSuccessful(user); 
         }else
             MensajesEmergentes.errorLog();

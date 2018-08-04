@@ -37,10 +37,8 @@ public class CalendarView extends BorderPane {
         next = new Button(">");
         back = new Button("<");
         text = new Text();
-        long i = System.currentTimeMillis();
         anios = Year.getYears();
         int anio = datePicker.getValue().getYear();
-        System.out.println("TIEMPO: " + (System.currentTimeMillis() - i));
         posM = datePicker.getValue().getMonth().getValue() - 1;
         while(anio != Year.anios[posA])
             posA++;

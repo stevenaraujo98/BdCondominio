@@ -36,7 +36,7 @@ import menudrawing.MenuDrawing;
  *
  * 
  */
-public class AdminPane {
+public class UserPane {
     private final BorderPane root;
     private final MenuDrawing menu;
     private CalendarView calendar;
@@ -46,19 +46,15 @@ public class AdminPane {
     private final Usuario user;
     
     
-    public AdminPane(Stage stage, Usuario user) {
+    public UserPane(Stage stage, Usuario user) {
         this.stage = stage;
         this.user = user;
         root = new BorderPane();
         menu = new MenuDrawing(
-                new ItemView("Registrar usuario", 
-                        new Image(AdminPane.class.getResourceAsStream("newUser.png"), 30, 30, true, true)),
-                new ItemView("Consulta de usuarios", 
-                        new Image(AdminPane.class.getResourceAsStream("selectUser.png"), 30, 30, true, true)),
-                new ItemView("Registrar pago de alícuotas", 
-                        new Image(AdminPane.class.getResourceAsStream("pay.png"), 30, 30, true, true)),
-                new ItemView("Crear nueva actividad", 
-                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
+                new ItemView("Registrar factura", 
+                        new Image(AdminPane.class.getResourceAsStream("bill.png"), 30, 30, true, true)),
+                new ItemView("Consulta de estado de cuenta", 
+                        new Image(AdminPane.class.getResourceAsStream("account.png"), 30, 30, true, true)),
                 new ItemView("Elecciones", 
                         new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
         
@@ -76,29 +72,19 @@ public class AdminPane {
                     System.out.println("Primero");
                     root.setCenter(new VBox(new Text("Primero")/*, month*/)); 
                     //calendar.addEvent(LocalDate.of(2018, Month.JULY, 16), "Prueba1", Color.AQUA);
-                    stage.setTitle("Admin - Registrar"); 
+                    stage.setTitle("User - Facturas"); 
                     break;
                 case 1: 
                     root.setCenter(new VBox(new Text("Segundo"))); 
                     //calendar.addEvent(LocalDate.of(2018, Month.JULY, 18), "Prueba2", Color.WHITE);
                     System.out.println("Segundo");
-                    stage.setTitle("Admin - Consultar"); 
+                    stage.setTitle("User - Cuentas"); 
                     break;
                 case 2:
                     root.setCenter(new VBox(new Text("Tercero")));
                     //calendar.addEvent(LocalDate.of(2018, Month.JULY, 17), "Prueba3", Color.RED);
                     System.out.println("Tercero");
-                    stage.setTitle("Admin - Cobros"); 
-                    break;
-                case 3:
-                    root.setCenter(new VBox(new Text("Cuarto")));
-                    System.out.println("Admin - Actividades");
-                    stage.setTitle("Admin - Actividades"); 
-                    break;
-                case 4:
-                    root.setCenter(new VBox(new Text("Quinto")));
-                    System.out.println("Quinto");
-                    stage.setTitle("Admin - Elecciones");
+                    stage.setTitle("User - Elecciones"); 
                     break;
                 default:
                     break;
@@ -146,7 +132,7 @@ public class AdminPane {
         shadow.setColor(Color.rgb(182, 182, 182)); 
         r.setEffect(shadow);  
         r.setFill(Color.rgb(245, 245, 245));
-        Text text = new Text("ADMINISTRADOR");
+        Text text = new Text("USUARIO");
         text.setStyle(Const.FONT_BOLD); 
         Text username = new Text(user.getUser());
         VBox vb = new VBox(5, text, username);
@@ -164,7 +150,7 @@ public class AdminPane {
         home.setOnMouseReleased(e-> r.setFill(Color.rgb(245, 245, 245)));
         
         home.setOnMouseClicked(e-> {
-            stage.setTitle("Admin - Home"); 
+            stage.setTitle("User - Home"); 
         }); 
     }
     

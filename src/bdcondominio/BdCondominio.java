@@ -22,6 +22,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import screens.AdminScreen;
+import screens.UserScreen;
 
 
 
@@ -70,8 +71,19 @@ public class BdCondominio extends Application {
                 cuadroContra.setText("");
                 if(usuario != null){
                     stage.close();
-                    AdminScreen admin = new AdminScreen(usuario);
-                    admin.show();
+                    switch(usuario.getTipo()) {
+                        case "ADMIN":
+                            AdminScreen admin = new AdminScreen(usuario);
+                            admin.show();
+                            break;
+                        case "DUEÑO":
+                            UserScreen users = new UserScreen(usuario);
+                            users.show();
+                            break;
+                        default:
+                            break;
+                    }
+                    
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
