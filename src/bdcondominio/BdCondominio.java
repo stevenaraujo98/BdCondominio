@@ -5,6 +5,8 @@
  */
 package bdcondominio;
 
+import usuarios.UsuarioDB;
+import usuarios.Usuario;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -32,13 +34,16 @@ import screens.UserScreen;
  */
 public class BdCondominio extends Application {
     
+    private static Stage stages = new Stage();
+    
     @Override
     public void init() {
         try{
-            UsuarioDB.conectar();
+            DataBase.conectar();
         }catch(SQLException ex){
             System.out.println("Error de conexion");
             System.out.println(ex.getMessage());
+            Logger.getLogger(BdCondominio.class.getName()).log(Level.SEVERE, null, ex);
         } catch (ClassNotFoundException ex) { 
             Logger.getLogger(BdCondominio.class.getName()).log(Level.SEVERE, null, ex);
         } 
@@ -46,6 +51,7 @@ public class BdCondominio extends Application {
 
     @Override
     public void start(Stage stage) throws Exception {
+        stages = stage;
         VBox p = new VBox();  
         stage.setTitle("Inicio de Sesión");
         ImageView iv = new ImageView(new Image(BdCondominio.class.getResourceAsStream("kenast.png"), 200, 150, true, true));
@@ -70,6 +76,7 @@ public class BdCondominio extends Application {
                 cuadroUsuario.setText("");
                 cuadroContra.setText("");
                 if(usuario != null){
+                    MensajesEmergentes.accessSuccessful(usuario);
                     stage.close();
                     switch(usuario.getTipo()) {
                         case "ADMIN":
@@ -83,7 +90,8 @@ public class BdCondominio extends Application {
                         default:
                             break;
                     }
-                    
+                }else {
+                    MensajesEmergentes.errorLog();
                 }
             } catch (SQLException ex) {
                 System.out.println(ex.getMessage());
@@ -93,9 +101,13 @@ public class BdCondominio extends Application {
        
     }
     
+    public static void show() {
+        stages.show();
+    }
+    
     @Override
     public void stop() {
-        UsuarioDB.close();
+        DataBase.close();
     }
     
     public static void main(String[] args) { 

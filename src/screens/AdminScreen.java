@@ -5,7 +5,7 @@
  */
 package screens;
 
-import bdcondominio.Usuario;
+import usuarios.Usuario;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 

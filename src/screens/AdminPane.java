@@ -6,7 +6,8 @@
 package screens;
 
 import CalendarControl.CalendarView;
-import bdcondominio.Usuario;
+import bdcondominio.BdCondominio;
+import usuarios.Usuario;
 import java.time.LocalDate;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +32,8 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menudrawing.ItemView;
 import menudrawing.MenuDrawing;
+import usuarios.EditDeleteUserPane;
+import usuarios.RegistrarUsuarioPane;
 
 /**
  *
@@ -73,16 +76,12 @@ public class AdminPane {
         menu.setOnAction(e-> {
             switch(menu.getItemSelected()) {
                 case 0:
-                    System.out.println("Primero");
-                    root.setCenter(new VBox(new Text("Primero")/*, month*/)); 
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 16), "Prueba1", Color.AQUA);
                     stage.setTitle("Admin - Registrar"); 
+                    root.setCenter(new RegistrarUsuarioPane()); 
                     break;
-                case 1: 
-                    root.setCenter(new VBox(new Text("Segundo"))); 
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 18), "Prueba2", Color.WHITE);
-                    System.out.println("Segundo");
+                case 1:  
                     stage.setTitle("Admin - Consultar"); 
+                    root.setCenter(new EditDeleteUserPane()); 
                     break;
                 case 2:
                     root.setCenter(new VBox(new Text("Tercero")));
@@ -164,6 +163,7 @@ public class AdminPane {
         home.setOnMouseReleased(e-> r.setFill(Color.rgb(245, 245, 245)));
         
         home.setOnMouseClicked(e-> {
+            root.setCenter(null); 
             stage.setTitle("Admin - Home"); 
         }); 
     }
@@ -195,8 +195,8 @@ public class AdminPane {
         
         logOut.setOnMouseClicked(e-> {
             System.out.println("LogOut");
-//            stage.close();
-//            Platform.exit();
+            stage.close();
+            BdCondominio.show();
         }); 
     }
     

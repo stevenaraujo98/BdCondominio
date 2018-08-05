@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package bdcondominio;
+package usuarios;
 
 /**
  *
@@ -11,10 +11,13 @@ package bdcondominio;
  */
 public class Usuario {
     
+    private int id;
     private String user;
     private String password;
     private String name;
     private String lastname;
+    private String email;
+    private String telefono;
     private String tipo;
 
     public Usuario(String user, String password) {
@@ -22,11 +25,28 @@ public class Usuario {
         this.password = password;
     }
 
-    public Usuario(String user, String password, String name, String lastname, String tipo) {
+    public Usuario(String user, String password, String name, String lastname, 
+            String email, String telefono, String tipo) {
         this(user, password);
         this.name = name;
         this.lastname = lastname;
+        this.email = email;
+        this.telefono = telefono;
         this.tipo = tipo;
+    }
+    
+    public Usuario(int id, String user, String password, String name, String lastname, 
+            String email, String telefono, String tipo) {
+        this(user, password, name, lastname, email, telefono, tipo);
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
     
     public String getUser() {
@@ -61,6 +81,22 @@ public class Usuario {
         this.lastname = lastname;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+    
     public String getTipo() {
         return tipo;
     }

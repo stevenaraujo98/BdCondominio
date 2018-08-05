@@ -6,7 +6,7 @@
 package screens;
 
 import CalendarControl.CalendarView;
-import bdcondominio.Usuario;
+import usuarios.Usuario;
 import java.time.LocalDate;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -31,6 +31,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menudrawing.ItemView;
 import menudrawing.MenuDrawing;
+import bdcondominio.BdCondominio;
 
 /**
  *
@@ -181,8 +182,8 @@ public class UserPane {
         
         logOut.setOnMouseClicked(e-> {
             System.out.println("LogOut");
-//            stage.close();
-//            Platform.exit();
+            stage.close();
+            BdCondominio.show();
         }); 
     }
     
