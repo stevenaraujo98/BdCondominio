@@ -11,10 +11,11 @@ package pago;
  */
 public enum Factura {
    
-    ALICUOTA(1, "allicuota"),
+    ALICUOTA(1, "alícuota"),
     ELECTRICIDAD(2, "electricidad"),
     AGUA(3, "agua"),
-    TELEFONO(4, "telefono");
+    TELEFONO(4, "teléfono"),
+    MULTA(5, "multa");
     
     
     private final int id;

@@ -120,7 +120,7 @@ public class EditDeleteUserPane extends VBox {
                 id.setDisable(true); 
                 edit.setText("Guardar"); 
             }else if(edit.getText().equals("Guardar")){
-                if(MensajesEmergentes.cofirmSave("Desea guardar este usuario").get() == ButtonType.OK){
+                if(MensajesEmergentes.cofirmAccion("Desea guardar este usuario").get() == ButtonType.OK){
                     edit.setText("Editar");
                     disableTextFields(true);
                     id.setDisable(false); 
@@ -231,7 +231,7 @@ public class EditDeleteUserPane extends VBox {
         delete.setOnAction(e-> {
             status.setText(""); 
             try {
-                if(MensajesEmergentes.cofirmSave("Esta seguro que dese eliminar este usuario?").get() == ButtonType.OK){
+                if(MensajesEmergentes.cofirmAccion("Esta seguro que dese eliminar este usuario?").get() == ButtonType.OK){
                     UsuarioDB.delete(usuario);
                     edit.setText("Editar");
                     id.setDisable(false); 

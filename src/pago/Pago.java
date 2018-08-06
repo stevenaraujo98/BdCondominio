@@ -5,6 +5,7 @@
  */
 package pago;
 
+import apartamento.Apartamento;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -18,16 +19,18 @@ public class Pago {
     private LocalDate fecha;
     private Factura factura;
     private int id;
+    private Apartamento apartamento;
     
-    public Pago(float monto, LocalDate fecha, Factura factura) {
+    public Pago(float monto, LocalDate fecha, Factura factura, Apartamento apartamento) {
         this.monto = monto;
         this.fecha = fecha;
         this.factura = factura;
         this.fecha.format(DateTimeFormatter.ISO_LOCAL_DATE); 
+        this.apartamento = apartamento;
     }
     
-    public Pago(int id, float monto, LocalDate fecha, Factura factura) {
-        this(monto, fecha, factura);
+    public Pago(int id, float monto, LocalDate fecha, Factura factura, Apartamento apartamento) {
+        this(monto, fecha, factura, apartamento);
         this.id = id;
     }
 
@@ -57,6 +60,19 @@ public class Pago {
 
     public void setFactura(Factura factura) {
         this.factura = factura;
+    }
+
+    public Apartamento getApartamento() {
+        return apartamento;
+    }
+
+    public void setApartamento(Apartamento apartamento) {
+        this.apartamento = apartamento;
+    }
+    
+    @Override
+    public String toString() {
+        return "Tipo: " + factura.getTipo() + ", Fecha: " + fecha + ",  Monto: " + monto;
     }
     
 }

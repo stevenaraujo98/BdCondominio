@@ -110,7 +110,7 @@ public class RegistrarUsuarioPane extends VBox {
                 try{
                     if(UsuarioDB.consultarUsuario("\""+usuario+"\"", "\""+contra+"\"") == null){
                         Usuario newUser = new Usuario(usuario, contra, nombre, apellido, correo, telefono, "DUEÑO");
-                        if(MensajesEmergentes.cofirmSave("Desea guardar este usuario").get() == ButtonType.OK){
+                        if(MensajesEmergentes.cofirmAccion("Desea guardar este usuario").get() == ButtonType.OK){
                             int id = UsuarioDB.crear(newUser);
                             if(id != -1){
                                 MensajesEmergentes.infoSave(id); 

@@ -32,6 +32,7 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import menudrawing.ItemView;
 import menudrawing.MenuDrawing;
+import pago.PagoPane;
 import usuarios.EditDeleteUserPane;
 import usuarios.RegistrarUsuarioPane;
 
@@ -58,7 +59,7 @@ public class AdminPane {
                         new Image(AdminPane.class.getResourceAsStream("newUser.png"), 30, 30, true, true)),
                 new ItemView("Consulta de usuarios", 
                         new Image(AdminPane.class.getResourceAsStream("selectUser.png"), 30, 30, true, true)),
-                new ItemView("Registrar pago de alícuotas", 
+                new ItemView("Registros de pagos", 
                         new Image(AdminPane.class.getResourceAsStream("pay.png"), 30, 30, true, true)),
                 new ItemView("Crear nueva actividad", 
                         new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
@@ -84,10 +85,8 @@ public class AdminPane {
                     root.setCenter(new EditDeleteUserPane()); 
                     break;
                 case 2:
-                    root.setCenter(new VBox(new Text("Tercero")));
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 17), "Prueba3", Color.RED);
-                    System.out.println("Tercero");
-                    stage.setTitle("Admin - Cobros"); 
+                    stage.setTitle("Admin - Pagos"); 
+                    root.setCenter(new PagoPane(user, true)); 
                     break;
                 case 3:
                     root.setCenter(new VBox(new Text("Cuarto")));

@@ -73,4 +73,16 @@ public class UsuarioDB {
         return !DataBase.getStatement().execute(call);
     }
     
+    public static Usuario getCurrentAdmin() throws SQLException {
+        String call = "CALL CURRENTADMIN()";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        if(rs == null)
+            return null;
+        Usuario admin = null;
+        if(rs.next())
+            admin = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+        return admin;
+    }
+    
 }

@@ -32,6 +32,7 @@ import javafx.stage.Stage;
 import menudrawing.ItemView;
 import menudrawing.MenuDrawing;
 import bdcondominio.BdCondominio;
+import pago.PagoPane;
 
 /**
  *
@@ -52,7 +53,7 @@ public class UserPane {
         this.user = user;
         root = new BorderPane();
         menu = new MenuDrawing(
-                new ItemView("Registrar factura", 
+                new ItemView("Facturas", 
                         new Image(AdminPane.class.getResourceAsStream("bill.png"), 30, 30, true, true)),
                 new ItemView("Consulta de estado de cuenta", 
                         new Image(AdminPane.class.getResourceAsStream("account.png"), 30, 30, true, true)),
@@ -70,10 +71,8 @@ public class UserPane {
         menu.setOnAction(e-> {
             switch(menu.getItemSelected()) {
                 case 0:
-                    System.out.println("Primero");
-                    root.setCenter(new VBox(new Text("Primero")/*, month*/)); 
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 16), "Prueba1", Color.AQUA);
                     stage.setTitle("User - Facturas"); 
+                    root.setCenter(new PagoPane(user, false));
                     break;
                 case 1: 
                     root.setCenter(new VBox(new Text("Segundo"))); 
@@ -152,6 +151,7 @@ public class UserPane {
         
         home.setOnMouseClicked(e-> {
             stage.setTitle("User - Home"); 
+            root.setCenter(null); 
         }); 
     }
     

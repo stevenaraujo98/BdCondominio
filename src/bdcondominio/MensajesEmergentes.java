@@ -33,7 +33,7 @@ public class MensajesEmergentes {
         alert.showAndWait();
     }
     
-    public static Optional<ButtonType> cofirmSave(String text) {
+    public static Optional<ButtonType> cofirmAccion(String text) {
         Alert alert = new Alert(AlertType.CONFIRMATION);
         alert.setTitle("Confirmación de acción");
         alert.setHeaderText("Confirmación de acción");

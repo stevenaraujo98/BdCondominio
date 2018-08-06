@@ -5,6 +5,7 @@
  */
 package pago;
 
+import apartamento.ApartamentoDB;
 import bdcondominio.DataBase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -27,7 +28,7 @@ public class PagoBD {
             throws SQLException {
         if(pago == null)
             return false;
-        String query = "CALL CREATEPAGO (" + pago.getMonto()+","+pago.getFecha()+"," 
+        String query = "CALL CREATEPAGO (" +pago.getMonto()+","+"\'"+pago.getFecha()+"\'"+"," 
                                         +idApartamento+","+idAdministrador+","+
                                         pago.getFactura().getId()+","+idHabitante+")";
         return DataBase.getStatement().execute(query);
@@ -35,12 +36,14 @@ public class PagoBD {
     
     public static List<Pago> read(int idHabitante, LocalDate fecha) throws SQLException {
         ArrayList<Pago> pagos = new ArrayList<>();
-        String query = "CALL READPAGO ("+idHabitante + ", " + fecha + ")";
+        String query = "CALL READPAGO ("+idHabitante + ", " +"\'"+fecha +"\'"+ ")";
         ResultSet rs = DataBase.getStatement().executeQuery(query);
+        if(rs == null)
+            return null;
         while(rs.next()) {
             Pago pago = new Pago(rs.getInt(1), rs.getFloat(2), 
                     LocalDate.parse(rs.getString(3), DateTimeFormatter.ISO_LOCAL_DATE),
-                    Factura.getById(rs.getInt(4)));
+                    Factura.getById(rs.getInt(4)), ApartamentoDB.getById(rs.getInt(5))); 
             pagos.add(pago);
         }
         return pagos;
@@ -49,7 +52,7 @@ public class PagoBD {
     public static boolean update(int idPago, int idFac, int idApar, int idAdmin, 
             LocalDate datep, float mont, int idHab) throws SQLException {
         String query = "CALL UPDATEPAGO ("+idPago+","+idFac+","+idApar+","+idAdmin+
-                                        ","+datep+","+mont+","+idHab+")";
+                                        ","+"\'"+datep+"\'"+","+mont+","+idHab+")";
         return DataBase.getStatement().execute(query); 
     }
     
