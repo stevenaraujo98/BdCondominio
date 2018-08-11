@@ -9,6 +9,8 @@ import bdcondominio.DataBase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -85,4 +87,15 @@ public class UsuarioDB {
         return admin;
     }
     
+    public static List<Usuario> getListaUsuarios() throws SQLException{
+        List<Usuario> usuariolist= new ArrayList<>();
+        String call = "CALL LISTADOUSUARIOS ()";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        while(rs.next()) {
+            Usuario u = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+            usuariolist.add(u);
+        }
+        return usuariolist;
+    }
 }

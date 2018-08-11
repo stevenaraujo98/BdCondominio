@@ -105,6 +105,9 @@ public class Usuario {
         this.tipo = tipo;
     }
     
-    
+    @Override
+    public String toString() {
+        return name + " " +lastname;
+    }
   
 }

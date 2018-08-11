@@ -136,4 +136,13 @@ CREATE PROCEDURE DELETEPAGO
     END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE LISTADOUSUARIOS ()
+	BEGIN 
+		SELECT h.idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
+        FROM LOGIN l, HABITANTE h
+        WHERE l.idHabitante = h.idHabitante;
+	END //
+DELIMITER ;
+
 
