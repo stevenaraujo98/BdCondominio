@@ -37,6 +37,13 @@ public class Apartamento {
         this.cantPersonas = cantPersonas;
     }
 
+    public Apartamento(float precio, String descripcion, String estado, Usuario owner) {
+        this.precio = precio;
+        this.descripcion = descripcion;
+        this.estado = estado;
+        this.owner = owner;
+    }
+    
     public int getId() {
         return id;
     }

@@ -7,15 +7,7 @@ ALTER TABLE pago
 ADD CONSTRAINT fk_idHabitante
 FOREIGN KEY (idHabitante) REFERENCES habitante(idHabitante);
 
-DELIMITER //
-CREATE PROCEDURE LOGINAPP (IN userName VARCHAR(30), IN pass VARCHAR(30))
-	BEGIN
-		SELECT h.idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
-        FROM LOGIN l, HABITANTE h
-        WHERE users = userName AND passwords = pass
-				AND l.idHabitante = h.idHabitante;
-	END //
-DELIMITER ;
+
 
 DELIMITER //
 CREATE PROCEDURE CREATEUSER 
@@ -37,14 +29,6 @@ CREATE PROCEDURE CREATEUSER
 	END //
 DELIMITER ;
 
-DELIMITER //
-CREATE PROCEDURE READUSER (IN id INT)
-	BEGIN
-		SELECT h.idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
-        FROM LOGIN l, HABITANTE h
-        WHERE l.idHabitante = id AND h.idHabitante = id;
-	END //
-DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE DELETEUSER
@@ -136,13 +120,64 @@ CREATE PROCEDURE DELETEPAGO
     END //
 DELIMITER ;
 
-DELIMITER //
-CREATE PROCEDURE LISTADOUSUARIOS ()
-	BEGIN 
-		SELECT h.idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
+
+CREATE VIEW LISTADOUSUARIOS
+AS SELECT h.idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
         FROM LOGIN l, HABITANTE h
         WHERE l.idHabitante = h.idHabitante;
+
+DROP PROCEDURE LOGINAPP;
+DROP PROCEDURE READUSER;
+
+DELIMITER //
+CREATE PROCEDURE LOGINAPP (IN userName VARCHAR(30), IN pass VARCHAR(30))
+	BEGIN
+		SELECT idHabitante, users, passwords, Nombre, Apellido, Correo, Telefono, TIPO
+        FROM LISTADOUSUARIOS 
+        WHERE users = userName AND passwords = pass;
 	END //
 DELIMITER ;
 
+DELIMITER //
+CREATE PROCEDURE READUSER (IN id INT)
+	BEGIN
+		SELECT *
+        FROM listadousuarios
+        WHERE idHabitante = id;
+	END //
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE READAPARTAMENTO(IN id INT)
+	BEGIN
+		SELECT * 
+        FROM APARTAMENTO
+        WHERE id = idApartamento;
+	END //
+DELIMITER;
+
+DELIMITER //
+CREATE PROCEDURE CREATEAPARTAMENTOC(IN precion FLOAT, IN descripcionn VARCHAR(90), IN estadon VARCHAR(30), IN idDuenon INT, IN idHabitanten INT, IN cantMascotasn INT, IN cantPersonasn INT)
+	BEGIN 
+		INSERT INTO apartamento(precio, descripcion, estado, idDueno, idHabitante, cantMascotas, cantPersonas) VALUES(precion, descripcionn, estadon, idDuenon, idHabitanten, cantMascotasn, cantPersonasn);
+        
+        SELECT idApartamento
+        FROM APARTAMENTO
+        WHERE precio = precion AND estado = estadon AND descripcion = descripcionn AND idDuenon = idDueno
+        AND idHabitanten = idHabitante AND cantMascotasn = cantMascotas AND cantPersonas = cantPersonasn;
+	END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE CREATEAPARTAMENTOI(IN precion FLOAT, IN descripcionn VARCHAR(90), IN estadon VARCHAR(30), IN idDuenon INT)
+	BEGIN 
+		INSERT INTO apartamento(precio, descripcion, estado, idDueno, idHabitante, cantMascotas, cantPersonas) VALUES(precion, descripcionn, estadon, idDuenon, 0, 0, 0);
+        
+        SELECT idApartamento
+        FROM APARTAMENTO
+        WHERE precio = precion AND estado = estadon AND descripcion = descripcionn AND idDuenon = idDueno;
+	END //
+DELIMITER ;
 

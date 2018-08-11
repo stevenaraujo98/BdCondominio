@@ -8,6 +8,7 @@ package apartamento;
 import bdcondominio.DataBase;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
 import usuarios.UsuarioDB;
@@ -20,6 +21,29 @@ public class ApartamentoDB {
    
     private ApartamentoDB() {
     
+    }
+    
+    public static int crearC(Apartamento apartamento) throws SQLException {
+        String call = "CALL CREATEAPARTAMENTOC ("+"\""+apartamento.getPrecio()+"\""+","+"\""+apartamento.getDescripcion()+"\""+","+
+                                        "\""+apartamento.getEstado()+"\""+","+"\""+apartamento.getOwner().getId()+"\""+","+"\""+apartamento.getHabitante().getId()+
+                                        "\""+","+"\""+apartamento.getCantMascotas()+"\""+","+"\""+apartamento.getCantPersonas()+"\""+")";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        if(rs.next()){
+            apartamento.setId(rs.getInt(1));
+            return apartamento.getId();
+        }
+        return -1;
+    }
+    
+    public static int crearI(Apartamento apartamento) throws SQLException {
+        String call = "CALL CREATEAPARTAMENTOI ("+"\""+apartamento.getPrecio()+"\""+","+"\""+apartamento.getDescripcion()+"\""+","+
+                                        "\""+apartamento.getEstado()+"\""+","+"\""+apartamento.getOwner().getId()+"\""+")";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        if(rs.next()){
+            apartamento.setId(rs.getInt(1));
+            return apartamento.getId();
+        }
+        return -1;
     }
     
     public static List<Apartamento> getUserApartments(int id) throws SQLException {
@@ -49,6 +73,4 @@ public class ApartamentoDB {
                                 rs.getInt(7), rs.getInt(8));
         return a;
     }
-   
-    
 }

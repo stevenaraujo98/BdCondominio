@@ -89,7 +89,7 @@ public class UsuarioDB {
     
     public static List<Usuario> getListaUsuarios() throws SQLException{
         List<Usuario> usuariolist= new ArrayList<>();
-        String call = "CALL LISTADOUSUARIOS ()";
+        String call = "SELECT * FROM LISTADOUSUARIOS";
         ResultSet rs = DataBase.getStatement().executeQuery(call);
         while(rs.next()) {
             Usuario u = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), 

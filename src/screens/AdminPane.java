@@ -66,7 +66,7 @@ public class AdminPane {
                         new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
                 new ItemView("Elecciones", 
                         new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)), 
-                new ItemView("Apartamentos", new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
+                new ItemView("Registrar Apartamento", new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
         
         root.setRight(new VBox(new Rectangle(10, 5, Color.TRANSPARENT), menu)); 
         root.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
