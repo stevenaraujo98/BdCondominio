@@ -8,6 +8,7 @@ package screens;
 import CalendarControl.CalendarView;
 import actividad.Participacion;
 import actividad.ParticipacionDB;
+import apartamento.UsuarioApartPane;
 import usuarios.Usuario;
 import java.time.LocalDate;
 import javafx.geometry.Insets;
@@ -62,6 +63,8 @@ public class UserPane {
                         new Image(AdminPane.class.getResourceAsStream("bill.png"), 30, 30, true, true)),
                 new ItemView("Consulta de estado de cuenta", 
                         new Image(AdminPane.class.getResourceAsStream("account.png"), 30, 30, true, true)),
+                new ItemView("Apartamentos", 
+                        new Image(AdminPane.class.getResourceAsStream("buscarApart.png"), 30, 30, true, true)),
                 new ItemView("Elecciones", 
                         new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
         
@@ -86,6 +89,10 @@ public class UserPane {
                     stage.setTitle("User - Cuentas"); 
                     break;
                 case 2:
+                    stage.setTitle("User - Apartamentos"); 
+                    root.setCenter(new UsuarioApartPane(user)); 
+                    break;
+                case 3:
                     root.setCenter(new VBox(new Text("Tercero")));
                     //calendar.addEvent(LocalDate.of(2018, Month.JULY, 17), "Prueba3", Color.RED);
                     System.out.println("Tercero");
