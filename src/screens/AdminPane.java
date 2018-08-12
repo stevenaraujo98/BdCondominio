@@ -64,20 +64,20 @@ public class AdminPane {
                         new Image(AdminPane.class.getResourceAsStream("newUser.png"), 30, 30, true, true)),
                 new ItemView("Consulta de usuarios", 
                         new Image(AdminPane.class.getResourceAsStream("selectUser.png"), 30, 30, true, true)),
+                new ItemView("Registrar Apartamento", 
+                        new Image(AdminPane.class.getResourceAsStream("crearApart.png"), 30, 30, true, true)),
+                new ItemView("Consultar Apartamento", 
+                        new Image(AdminPane.class.getResourceAsStream("buscarApart.png"), 30, 30, true, true)),
                 new ItemView("Registros de pagos", 
                         new Image(AdminPane.class.getResourceAsStream("pay.png"), 30, 30, true, true)),
                 new ItemView("Crear nueva actividad", 
-                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
+                        new Image(AdminPane.class.getResourceAsStream("crearActi.png"), 30, 30, true, true)),
                 new ItemView("Consultar actividades", 
+                        new Image(AdminPane.class.getResourceAsStream("buscarActi.png"), 30, 30, true, true)),
+                new ItemView("Informes", 
                         new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
                 new ItemView("Elecciones", 
-                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)), 
-                new ItemView("Registrar Apartamento", 
-                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)),
-                new ItemView("Consultar Apartamento", 
-                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
-                new ItemView("Informes", 
-                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true))
+                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true))
         );
         
         root.setRight(new VBox(new Rectangle(10, 5, Color.TRANSPARENT), menu)); 
@@ -99,33 +99,33 @@ public class AdminPane {
                     root.setCenter(new EditDeleteUserPane()); 
                     break;
                 case 2:
-                    stage.setTitle("Admin - Pagos"); 
-                    root.setCenter(new PagoPane(user, true)); 
-                    break;
-                case 3:
-                    stage.setTitle("Admin - Actividades"); 
-                    root.setCenter(new ActividadPane());
-                    break;
-                case 4:
-                    stage.setTitle("Admin - Actividades"); 
-                    root.setCenter(new EditDeleteActividadPane());
-                    break;
-                case 5:
-                    root.setCenter(new VBox(new Text("Quinto")));
-                    System.out.println("Quinto");
-                    stage.setTitle("Admin - Elecciones");
-                    break;
-                case 6:
                     stage.setTitle("Admin - Apartamentos");
                     root.setCenter(new ApartamentoPane().getContenido());
                     break;
-                case 7:
+                case 3:
                     stage.setTitle("Admin - Consulta Apartamento");
                     root.setCenter(new EditDeleteApartamentoPane().getContenido());
                     break;
-                case 8:
+                case 4:
+                    stage.setTitle("Admin - Pagos"); 
+                    root.setCenter(new PagoPane(user, true)); 
+                    break;
+                case 5:
+                    stage.setTitle("Admin - Actividades"); 
+                    root.setCenter(new ActividadPane());
+                    break;
+                case 6:
+                    stage.setTitle("Admin - Actividades"); 
+                    root.setCenter(new EditDeleteActividadPane());
+                    break;
+                case 7:
                     stage.setTitle("Admin - Informes");
                     root.setCenter(new Informes().getContenido());
+                    break;
+                case 8:
+                    root.setCenter(new VBox(new Text("Quinto")));
+                    System.out.println("Quinto");
+                    stage.setTitle("Admin - Elecciones");
                     break;
                 default:
                     break;

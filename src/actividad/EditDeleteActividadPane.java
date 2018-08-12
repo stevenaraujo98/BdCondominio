@@ -142,7 +142,7 @@ public class EditDeleteActividadPane extends VBox{
                 }
                 participacion(p);
                 actividadBox.getChildren().addAll(box, new VBox(5, des, descrip), t, participaciones);
-                evtEditar(a);
+                evtBotones(a);
             }
         }); 
     }
@@ -201,7 +201,7 @@ public class EditDeleteActividadPane extends VBox{
             content2.getChildren().add(content2.getChildren().size() - 1, part); 
         }); 
     }
-    private void evtEditar(Actividad a) {
+    private void evtBotones(Actividad a) {
         editar.setOnAction(e-> {
             if(editar.getText().equals("Editar")){
                 editar.setText("Guardar");
@@ -212,6 +212,27 @@ public class EditDeleteActividadPane extends VBox{
                 guardar(a);
             }  
         }); 
+        
+        borrar.setOnAction(e-> {
+            if(borrar.getText().equals("Borrar")){
+                if(MensajesEmergentes.cofirmAccion("¿Desea borrar esta activiad?").get() == ButtonType.OK) {
+                    try {
+                        ActividadDB.delete(a);
+                    } catch (SQLException ex) {
+                        Logger.getLogger(EditDeleteActividadPane.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    content.getChildren().clear();
+                    actividadBox.getChildren().clear();
+                    editar.setText("Editar");
+                    borrar.setText("Borrar");
+                    disableViews(true);
+                }
+            }else if(borrar.getText().equals("Cancelar")){
+                editar.setText("Editar");
+                borrar.setText("Borrar");
+                disableViews(true);
+            }
+        });
     }
     
     private void guardar(Actividad a) {

@@ -7,6 +7,8 @@ package CalendarControl;
 
 import java.time.DayOfWeek;
 import java.time.Month;
+import java.util.LinkedList;
+import java.util.List;
 import javafx.geometry.Pos;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -23,7 +25,7 @@ public class MonthView extends GridPane {
     private final DayView[] days;
     private final DayOfWeek startDay;
     private final double size = 30;
-    private Month mes;
+    private final Month mes;
     
     
     public MonthView(Month mes, DayOfWeek startDay, DayView... days) {
@@ -66,6 +68,15 @@ public class MonthView extends GridPane {
     
     public void selectDay(int dia, String event, Color color) {
         days[dia-1].select(color);
-        days[dia-1].setEvent(event); 
+        days[dia-1].addEvent(event); 
+    }
+    
+    public List<DayView> getSelectedDayViews() {
+        List<DayView> dias = new LinkedList<>();
+        for(DayView d: days) {
+            if(d.isSelected())
+                dias.add(d);
+        }
+        return dias;
     }
 }

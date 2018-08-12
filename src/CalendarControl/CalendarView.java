@@ -8,18 +8,24 @@ package CalendarControl;
 import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.time.Month;
+import java.util.HashMap;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.DatePicker;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
 /**
@@ -46,6 +52,7 @@ public class CalendarView extends BorderPane {
         super.setBackground(new Background(new BackgroundFill(Color.FLORALWHITE, CornerRadii.EMPTY, Insets.EMPTY))); 
         topPane();
         centerPane();
+        bottomPane();
         buttonEvent();
     }
 
@@ -73,6 +80,33 @@ public class CalendarView extends BorderPane {
         super.setCenter(sp);
     }
 
+    private void bottomPane() {
+        MonthView  month = anios[posA].months[posM];
+        ScrollPane scroll = new ScrollPane();
+        VBox box = new VBox();
+        box.setSpacing(10); 
+        box.setAlignment(Pos.TOP_LEFT); 
+        scroll.setFitToWidth(true); 
+        scroll.setHmax(30 * 7);
+        scroll.setMaxWidth(30 * 7);
+        scroll.setPannable(true); 
+        VBox.setVgrow(scroll, Priority.ALWAYS); 
+        scroll.setContent(box);
+        scroll.setHbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        scroll.setVbarPolicy(ScrollPane.ScrollBarPolicy.AS_NEEDED);
+        for(DayView d: month.getSelectedDayViews()) {
+            HashMap<String, Color> m = d.getEvents();
+            for(String evt: m.keySet()) {
+                Text event = new Text(evt + "\n" + LocalDate.of(Year.anios[posA], month.getMonth(), d.getDay()));
+                event.setFont(Font.font(12)); 
+                HBox b = new HBox(5, new Circle(10, m.get(evt)), event);
+                b.setAlignment(Pos.CENTER_LEFT); 
+                box.getChildren().add(b);
+            }
+        }
+        super.setBottom(scroll); 
+    }
+    
     private void buttonEvent() {
         next.setOnAction(e-> {
             if(posM < 11){
@@ -89,6 +123,8 @@ public class CalendarView extends BorderPane {
             StackPane sp = new StackPane(r, month);
             sp.setAlignment(Pos.CENTER); 
             super.setCenter(sp);
+            super.setBottom(null); 
+            bottomPane();
         }); 
         
         back.setOnAction(e-> {
@@ -105,6 +141,8 @@ public class CalendarView extends BorderPane {
             StackPane sp = new StackPane(r, month);
             sp.setAlignment(Pos.CENTER); 
             super.setCenter(sp);
+            super.setBottom(null); 
+            bottomPane();
         }); 
     }
     
@@ -148,5 +186,7 @@ public class CalendarView extends BorderPane {
         while(Year.anios[a] != date.getYear())
             a++;
         anios[a].months[date.getMonth().getValue() - 1].selectDay(date.getDayOfMonth(), event, color);
+        super.setBottom(null); 
+        bottomPane();
     }
 }

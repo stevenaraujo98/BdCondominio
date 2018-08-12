@@ -104,4 +104,26 @@ CREATE PROCEDURE EDITPARTICIPACION(IN idPar int, IN idHab int, IN fech date, IN 
     END //
 DELIMITER ;
 
+#--------------------------------------------------------------------12/08/2018
+DELIMITER //
+CREATE PROCEDURE DELTEACTIVIDAD(IN idAct int)
+	BEGIN 
+		update actividades
+        set estado = false
+        where idActividades = idAct;
+    END //
+DELIMITER ;
+
+DELIMITER //
+CREATE TRIGGER BORRARPARTICIPACIONES AFTER UPDATE ON actividades
+	FOR EACH ROW
+    BEGIN
+		IF NEW.estado = false THEN
+			update participaciones
+            set estado = false
+            where idActividades = NEW.idActividades;
+		END IF;
+	END //
+DELIMITER ;
+
 

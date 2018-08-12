@@ -43,4 +43,9 @@ public class ActividadDB {
                                             ", " +"\""+a.getDescrpcion()+"\")";
         DataBase.getStatement().execute(call);
     }
+    
+    public static void delete(Actividad a) throws SQLException {
+        String call = "CALL DELTEACTIVIDAD (" + a.getId() + ")";
+        DataBase.getStatement().execute(call);
+    }
 }

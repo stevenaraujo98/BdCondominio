@@ -5,6 +5,7 @@
  */
 package CalendarControl;
 
+import java.util.HashMap;
 import javafx.geometry.Pos;
 import javafx.scene.control.Tooltip;
 import javafx.scene.layout.StackPane;
@@ -23,6 +24,7 @@ public class DayView extends StackPane{
    private final double size = 30;
    private final Tooltip tool;
    private boolean selected;
+   private final HashMap<String, Color> eventos;
    
     public DayView(int day) {
         this.day = new Text(day+"");
@@ -33,11 +35,12 @@ public class DayView extends StackPane{
         super.getChildren().addAll(back, select, this.day);
         super.setAlignment(Pos.CENTER); 
         tool = new Tooltip("Sin evento");
+        eventos = new HashMap<>();
         Tooltip.install(this, tool);
-        addEvnet();
+        setEvent();
     }
     
-    private void addEvnet() {
+    private void setEvent() {
         this.setOnMouseEntered(e -> {if(!selected) select.setFill(Color.DARKGRAY);}); 
         this.setOnMouseExited(e -> {if(!selected) select.setFill(Color.FLORALWHITE);}); 
     }
@@ -52,12 +55,20 @@ public class DayView extends StackPane{
         select.setFill(Color.TRANSPARENT); 
     }
     
-    public void setEvent(String event){
+    public void addEvent(String event){
+        eventos.put(event, (Color)select.getFill());
         tool.setText(event); 
     }
     
-    public String getEvent() {
-        return tool.getText();
+    public HashMap<String, Color> getEvents() {
+        return eventos;
     }
     
+    public boolean isSelected() {
+        return selected;
+    }
+    
+    public int getDay() {
+        return Integer.parseInt(day.getText());
+    }
 }

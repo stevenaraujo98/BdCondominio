@@ -22,7 +22,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Text;
-import usuarios.RegistrarUsuarioPane;
 import usuarios.Usuario;
 import usuarios.UsuarioDB;
 
@@ -97,6 +96,7 @@ public final class EditDeleteApartamentoPane {
             combo.getItems().addAll(lista);
         }catch(SQLException ex){
             MensajesEmergentes.errorLog();
+            Logger.getLogger(EditDeleteApartamentoPane.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
     
