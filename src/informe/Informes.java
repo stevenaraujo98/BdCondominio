@@ -5,62 +5,46 @@
  */
 package informe;
 
-import apartamento.Apartamento;
-import apartamento.ApartamentoDB;
-import java.sql.SQLException;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
+import java.util.LinkedList;
+import javafx.geometry.Insets;
+import javafx.scene.control.ComboBox;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
-import usuarios.Usuario;
 
 /**
  *
  * @author SSAM
  */
 public class Informes {
-    private final Pane root;
-    private final TableView<Apartamento> tabla;
-    private final TableColumn<Apartamento, Integer> id;
-    private final TableColumn<Apartamento, Float> precio;
-    private final TableColumn<Apartamento, String> descripcion;
-    private final TableColumn<Apartamento, String> estado;
-    private final TableColumn<Apartamento, Usuario> duenio;
+    private final ComboBox<String> combo;
+    private final GridPane root;    
+    private Pane apartamento;
+    private Pane usuario;
     
-    
-    
-    public Informes() throws SQLException{
-        root = new Pane();
-        tabla = new TableView<>();
-        id = new TableColumn<>("id Apartamento");
-        precio = new TableColumn<>("Precio");
-        descripcion = new TableColumn<>("Descripcion");
-        estado = new TableColumn<>("Estado");
-        duenio = new TableColumn<>("Dueños");
-        editarTabla();        
+    public Informes(){
+        root = new GridPane();
+        combo = new ComboBox<>();
+        LinkedList<String> lista = new LinkedList<>();
+        lista.add("Usuario");
+        lista.add("Apartamento");        
+        combo.getItems().setAll(lista);
         
-        tabla.setItems(ApartamentoDB.getApartamentos());
-        root.getChildren().add(tabla);
+        usuario = new InformeUsuario().getContenido();
+        
+        root.add(combo,0,0);
+        root.setPadding(new Insets(10,10,10,10));
+        accionar();
     }
     
-    public void editarTabla(){
-        tabla.setEditable(true);
-        tabla.setTranslateX(10);
-        tabla.setTranslateY(10);
-        
-        
-        id.setMinWidth(140);
-        precio.setMinWidth(140);
-        descripcion.setMinWidth(140);
-        estado.setMinWidth(140);
-        duenio.setMinWidth(140);
-        tabla.getColumns().addAll(id, precio, descripcion, estado, duenio);
-        
-        id.setCellValueFactory(new PropertyValueFactory<>("id"));
-        precio.setCellValueFactory(new PropertyValueFactory<>("Precio"));
-        descripcion.setCellValueFactory(new PropertyValueFactory<>("Descripcion"));
-        estado.setCellValueFactory(new PropertyValueFactory<>("Estado"));
-        duenio.setCellValueFactory(new PropertyValueFactory<>("owner"));
+    public void accionar(){
+        combo.setOnAction(e -> {
+            if(combo.getValue().equals("Apartamento")){
+                root.add(new InformeApartamento().getContenido(),0,1);
+            }
+            else if(combo.getValue().equals("Usuario")){
+                root.add(new InformeUsuario().getContenido(),0,1);
+            }
+        });
     }
     
     public Pane getContenido() {

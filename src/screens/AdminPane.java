@@ -10,6 +10,7 @@ import actividad.ActividadPane;
 import apartamento.ApartamentoPane;
 import apartamento.EditDeleteApartamentoPane;
 import bdcondominio.BdCondominio;
+import informe.Informes;
 import usuarios.Usuario;
 import java.time.LocalDate;
 import javafx.geometry.Insets;
@@ -71,6 +72,8 @@ public class AdminPane {
                 new ItemView("Registrar Apartamento", 
                         new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)),
                 new ItemView("Consultar Apartamento", 
+                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
+                new ItemView("Informes", 
                         new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true))
         );
         
@@ -112,6 +115,10 @@ public class AdminPane {
                 case 6:
                     stage.setTitle("Admin - Consulta Apartamento");
                     root.setCenter(new EditDeleteApartamentoPane().getContenido());
+                    break;
+                case 7:
+                    stage.setTitle("Admin - Informes");
+                    root.setCenter(new Informes().getContenido());
                     break;
                 default:
                     break;

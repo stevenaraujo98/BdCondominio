@@ -148,8 +148,8 @@ CREATE PROCEDURE CREATEAPARTAMENTOC(IN precion FLOAT, IN descripcionn VARCHAR(90
         
         SELECT idApartamento
         FROM APARTAMENTO
-        WHERE precio = precion AND estado = estadon AND descripcion = descripcionn AND idDuenon = idDueno
-        AND idHabitanten = idHabitante AND cantMascotasn = cantMascotas AND cantPersonas = cantPersonasn;
+        WHERE precio = precion AND estado = estadon AND descripcion = descripcionn AND idDueno = idDuenon
+        AND idHabitante = idHabitanten AND cantMascotas = cantMascotasn AND cantPersonas = cantPersonasn;
 	END //
 DELIMITER ;
 
@@ -185,7 +185,7 @@ CREATE PROCEDURE APARTMENTBYID(IN id INT)
         FROM apartamentodisponibles
         where idApartamento = id;
     END//
-DELIMITER ;
+DELIMITER ;UPDATEPAGO
 
 DELIMITER //
 CREATE PROCEDURE DELETEAPARTAMENTO(IN id INT)
@@ -193,4 +193,27 @@ CREATE PROCEDURE DELETEAPARTAMENTO(IN id INT)
 		UPDATE apartamento SET estado = 'Inhabilitado'
         WHERE idApartamento = id;
     END //
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE UPDATEDEPARTAMENTO(IN id INT, IN precion FLOAT, IN descripcionn VARCHAR(90), IN estadon VARCHAR(30), IN idDuenon INT, IN idHabitanten INT, IN cantMascotasn INT, IN cantPersonasn INT)
+	BEGIN
+		UPDATE apartamento SET precio = precion, estado = estadon, descripcion = descripcionn, idDueno = idDuenon, idHabitante = idHabitanten, cantMascotas = cantMascotasn, cantPersonas = cantPersonasn
+        WHERE idApartamento = id;
+    END //
+DELIMITER ;listadousuarios
+
+DELIMITER //
+CREATE PROCEDURE UPDATEUSER 
+	(IN id INT, IN userName VARCHAR(30), IN pass VARCHAR(30), IN nomb VARCHAR(30), IN lastname VARCHAR(30),
+    IN email VARCHAR(50), IN phone VARCHAR(20), IN tip VARCHAR(30))
+	BEGIN
+		UPDATE habitante
+        SET Nombre = nomb, Apellido = lastname, Correo = email, Telefono = phone, TIPO = tip
+        WHERE idHabitante = id;
+        
+        UPDATE login
+        SET users = userName, passwords = pass
+		WHERE idHabitante = id;
+	END //
 DELIMITER ;

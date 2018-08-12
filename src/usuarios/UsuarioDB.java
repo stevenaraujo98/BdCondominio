@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 /**
  *
@@ -108,4 +110,17 @@ public class UsuarioDB {
         }
         return usuariolist;
     }
+    
+    public static ObservableList<Usuario> getListaUsuariosCombo() throws SQLException{
+        ObservableList<Usuario> usuariolist= FXCollections.observableArrayList();
+        String call = "SELECT * FROM LISTADOUSUARIOS";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        while(rs.next()) {
+            Usuario u = new Usuario(rs.getInt(1), rs.getString(2), rs.getString(3), 
+                    rs.getString(4), rs.getString(5), rs.getString(6), rs.getString(7), rs.getString(8));
+            usuariolist.add(u);
+        }
+        return usuariolist;
+    }
+
 }
