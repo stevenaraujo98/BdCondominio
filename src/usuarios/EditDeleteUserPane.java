@@ -13,6 +13,7 @@ import java.util.logging.Logger;
 import javafx.geometry.Insets;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextFormatter;
@@ -28,7 +29,7 @@ import javafx.scene.text.Text;
  */
 public class EditDeleteUserPane extends VBox {
     
-    private final TextField id;
+    private final ComboBox<Integer> id;
     private final TextField name;
     private final TextField lastname;
     private final TextField phone;
@@ -42,7 +43,7 @@ public class EditDeleteUserPane extends VBox {
     private Usuario usuario;
     
     public EditDeleteUserPane() {
-        id = new TextField();
+        id = new ComboBox<>();
         name = new TextField();
         lastname = new TextField();
         phone = new TextField();
@@ -72,7 +73,12 @@ public class EditDeleteUserPane extends VBox {
             return null;
         };
         TextFormatter<String> textFormatter = new TextFormatter<>(filter);
-        id.setTextFormatter(textFormatter); 
+        try {
+            //id.setTextFormatter(textFormatter);
+            id.getItems().addAll(UsuarioDB.getListaUsuariosId());
+        } catch (SQLException ex) {
+            Logger.getLogger(EditDeleteUserPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
 
     private void topPane() {
@@ -91,10 +97,9 @@ public class EditDeleteUserPane extends VBox {
     private void evtSearch() {
         search.setOnAction(e-> {
             status.setText("");
-            if(!id.getText().isEmpty()){
-                int idu = Integer.valueOf(id.getText());
+            if(id.getValue() != null){
                 try {
-                    usuario = UsuarioDB.getById(idu);
+                    usuario = UsuarioDB.getById(id.getValue());
                     if(usuario != null){
                         if(super.getChildren().size() == 2) {
                             super.getChildren().remove(1);
@@ -108,7 +113,7 @@ public class EditDeleteUserPane extends VBox {
                     Logger.getLogger(EditDeleteUserPane.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }else
-                status.setText("Por favor ingrese un id"); 
+                status.setText("Por favor seleccione un id"); 
         });
     }
     

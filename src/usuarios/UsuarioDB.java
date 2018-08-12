@@ -98,4 +98,14 @@ public class UsuarioDB {
         }
         return usuariolist;
     }
+    
+    public static List<Integer> getListaUsuariosId() throws SQLException{
+        List<Integer> usuariolist= new ArrayList<>();
+        String call = "SELECT idHabitante FROM LISTADOUSUARIOS";
+        ResultSet rs = DataBase.getStatement().executeQuery(call);
+        while(rs.next()) {
+            usuariolist.add(rs.getInt(1));
+        }
+        return usuariolist;
+    }
 }
