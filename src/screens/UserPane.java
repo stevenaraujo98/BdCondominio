@@ -6,6 +6,8 @@
 package screens;
 
 import CalendarControl.CalendarView;
+import actividad.Participacion;
+import actividad.ParticipacionDB;
 import usuarios.Usuario;
 import java.time.LocalDate;
 import javafx.geometry.Insets;
@@ -32,6 +34,9 @@ import javafx.stage.Stage;
 import menudrawing.ItemView;
 import menudrawing.MenuDrawing;
 import bdcondominio.BdCondominio;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import pago.PagoPane;
 
 /**
@@ -189,6 +194,12 @@ public class UserPane {
     
     private void leftPane() {
         calendar = new CalendarView(new DatePicker(LocalDate.now()));
+         try {
+            for(Participacion p: ParticipacionDB.getTareas(user))
+                calendar.addEvent(p.getFecha(), p.getTarea(), Color.AQUA);
+        } catch (SQLException ex) {
+            Logger.getLogger(UserPane.class.getName()).log(Level.SEVERE, null, ex);
+        }
         root.setLeft(new HBox(new Rectangle(10, 5, Color.TRANSPARENT), new VBox(new Rectangle(10, 5, Color.TRANSPARENT),calendar))); 
     }
 

@@ -109,5 +109,12 @@ public class Usuario {
     public String toString() {
         return name + " " +lastname;
     }
+    
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Usuario))
+            return false;
+        return ((Usuario)o).user.equals(user) && ((Usuario)o).password.equals(password);
+    }
   
 }

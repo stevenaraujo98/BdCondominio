@@ -110,7 +110,7 @@ public class ActividadPane extends VBox {
             if(titu.isEmpty() || des.isEmpty())
                 error.setText("Por favor llene todos los campos");
             else {
-                Actividad actividad = new Actividad(titu, des);
+                 Actividad actividad = new Actividad(titu, des, LocalDate.now());
                 List<Participacion> p = new LinkedList<>();
                 if(content.getChildren().size() > 1){
                     for(Node node: content.getChildren()) {

@@ -13,21 +13,21 @@ public class Participacion {
     
     private int id;
     private Actividad actividad;
-    private Usuario usuaio;
+    private Usuario usuario;
     private LocalDate fecha;
     private String tarea;
 
     public Participacion(int id, Actividad actividad, Usuario usuaio, LocalDate fecha, String tarea) {
         this.id = id;
         this.actividad = actividad;
-        this.usuaio = usuaio;
+        this.usuario = usuaio;
         this.fecha = fecha;
         this.tarea = tarea;
     }
 
     public Participacion(Actividad actividad, Usuario usuaio, LocalDate fecha, String tarea) {
         this.actividad = actividad;
-        this.usuaio = usuaio;
+        this.usuario = usuaio;
         this.fecha = fecha;
         this.tarea = tarea;
     }
@@ -49,11 +49,11 @@ public class Participacion {
     }
 
     public Usuario getUsuaio() {
-        return usuaio;
+        return usuario;
     }
 
     public void setUsuaio(Usuario usuaio) {
-        this.usuaio = usuaio;
+        this.usuario = usuaio;
     }
 
     public LocalDate getFecha() {
@@ -72,5 +72,12 @@ public class Participacion {
         this.tarea = tarea;
     }
     
-    
+    @Override
+    public boolean equals(Object o) {
+        if(!(o instanceof Participacion))
+            return false;
+        Participacion p = (Participacion)o;
+        return p.actividad.equals(actividad) && p.fecha.equals(fecha) && 
+                p.tarea.equals(tarea) && p.usuario.equals(usuario);
+    }
 }
