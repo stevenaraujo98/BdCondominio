@@ -6,6 +6,7 @@
 package screens;
 
 import CalendarControl.CalendarView;
+import actividad.ActividadPane;
 import apartamento.ApartamentoPane;
 import bdcondominio.BdCondominio;
 import usuarios.Usuario;
@@ -91,9 +92,8 @@ public class AdminPane {
                     root.setCenter(new PagoPane(user, true)); 
                     break;
                 case 3:
-                    root.setCenter(new VBox(new Text("Cuarto")));
-                    System.out.println("Admin - Actividades");
                     stage.setTitle("Admin - Actividades"); 
+                    root.setCenter(new ActividadPane());
                     break;
                 case 4:
                     root.setCenter(new VBox(new Text("Quinto")));
