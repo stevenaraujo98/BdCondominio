@@ -59,14 +59,7 @@ INSERT INTO apartamento(precio, descripcion, estado, idDueno, idHabitante, cantM
 					(3000, "Departamento estilo clásico", "libre", 3, 0, 4, 7),
 					(3500, "Departamento estilo clásico", "libre", 2, 0, 0, 7);
 
-DELIMITER //
-CREATE PROCEDURE USERAPARTMENTS(IN id INT)
-	BEGIN
-		SELECT *
-        FROM apartamento
-        where idDueno = id OR idHabitante = id;
-    END//
-DELIMITER ;
+
 
 insert into factura(tipo)
 	values("ALICUOTA"), ("ELECTRICIDAD"), ("AGUA"), ("TELEFONO"), ("MULTA");
@@ -91,14 +84,6 @@ CREATE PROCEDURE READPAGO
     END //
 DELIMITER ;
 
-DELIMITER //
-CREATE PROCEDURE APARTMENTBYID(IN id INT)
-	BEGIN
-		SELECT *
-        FROM apartamento
-        where idApartamento = id;
-    END//
-DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE UPDATEPAGO
@@ -147,8 +132,6 @@ CREATE PROCEDURE READUSER (IN id INT)
 	END //
 DELIMITER ;
 
-
-
 DELIMITER //
 CREATE PROCEDURE READAPARTAMENTO(IN id INT)
 	BEGIN
@@ -181,3 +164,33 @@ CREATE PROCEDURE CREATEAPARTAMENTOI(IN precion FLOAT, IN descripcionn VARCHAR(90
 	END //
 DELIMITER ;
 
+CREATE VIEW APARTAMENTOSDISPONIBLES
+AS 	SELECT *
+	FROM apartamento
+	WHERE estado <> "Inhabilitado";
+    
+DELIMITER //
+CREATE PROCEDURE USERAPARTMENTS(IN id INT)
+	BEGIN
+		SELECT *
+        FROM apartamentodisponibles
+        where idDueno = id OR idHabitante = id;
+    END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE APARTMENTBYID(IN id INT)
+	BEGIN
+		SELECT *
+        FROM apartamentodisponibles
+        where idApartamento = id;
+    END//
+DELIMITER ;
+
+DELIMITER //
+CREATE PROCEDURE DELETEAPARTAMENTO(IN id INT)
+	BEGIN
+		UPDATE apartamento SET estado = 'Inhabilitado'
+        WHERE idApartamento = id;
+    END //
+DELIMITER ;

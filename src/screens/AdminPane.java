@@ -8,6 +8,7 @@ package screens;
 import CalendarControl.CalendarView;
 import actividad.ActividadPane;
 import apartamento.ApartamentoPane;
+import apartamento.EditDeleteApartamentoPane;
 import bdcondominio.BdCondominio;
 import usuarios.Usuario;
 import java.time.LocalDate;
@@ -67,7 +68,11 @@ public class AdminPane {
                         new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
                 new ItemView("Elecciones", 
                         new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)), 
-                new ItemView("Registrar Apartamento", new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
+                new ItemView("Registrar Apartamento", 
+                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)),
+                new ItemView("Consultar Apartamento", 
+                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true))
+        );
         
         root.setRight(new VBox(new Rectangle(10, 5, Color.TRANSPARENT), menu)); 
         root.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));
@@ -103,6 +108,10 @@ public class AdminPane {
                 case 5:
                     stage.setTitle("Admin - Apartamentos");
                     root.setCenter(new ApartamentoPane().getContenido());
+                    break;
+                case 6:
+                    stage.setTitle("Admin - Consulta Apartamento");
+                    root.setCenter(new EditDeleteApartamentoPane().getContenido());
                     break;
                 default:
                     break;

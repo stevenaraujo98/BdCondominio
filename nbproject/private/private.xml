@@ -4,14 +4,14 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/bdcondominio/BdCondominio.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/usuarios/RegistrarUsuarioPane.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/screens/AdminPane.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/menudrawing/MenuDrawing.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/pago/PagoPane.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/usuarios/Usuario.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/apartamento/EditDeleteApartamentoPane.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/apartamento/Apartamento.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/apartamento/ApartamentoDB.java</file>
             <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/usuarios/UsuarioDB.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/screens/AdminScreen.java</file>
-            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/menudrawing/ItemView.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/apartamento/ApartamentoPane.java</file>
             <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/usuarios/EditDeleteUserPane.java</file>
+            <file>file:/C:/Users/SSAM/Documents/GitHub/BdCondominio/src/informe/Informes.java</file>
         </group>
     </open-files>
 </project-private>
