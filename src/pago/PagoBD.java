@@ -12,6 +12,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.LinkedList;
 import java.util.List;
 
 /**
@@ -59,6 +60,17 @@ public class PagoBD {
     public static boolean delete(Pago pago) throws SQLException {
         String query = "CALL DELETEPAGO (" + pago.getId() + ")";
         return DataBase.getStatement().execute(query); 
+    }
+    
+    public static List<Reporte> hacerReporte(LocalDate fechaI, LocalDate fechaF) throws SQLException {
+        String call = "CALL LISTAPAGOS (" + "'"+fechaI.format(DateTimeFormatter.ISO_LOCAL_DATE)+"'"+", "+
+                                        "'"+fechaI.format(DateTimeFormatter.ISO_LOCAL_DATE)+"')";
+        ResultSet set = DataBase.getStatement().executeQuery(call);
+        List<Reporte> lista = new LinkedList<>();
+        while(set.next()) {
+            lista.add(new Reporte(set.getString(1), set.getString(2), set.getFloat(3)));
+        }
+        return lista;
     }
     
 }

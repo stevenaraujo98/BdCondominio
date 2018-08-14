@@ -77,7 +77,7 @@ public class InformeApartamento {
         duenio.setCellValueFactory(new PropertyValueFactory<>("owner"));
         habitante.setCellValueFactory(new PropertyValueFactory<>("habitante"));
         cantMascotas.setCellValueFactory(new PropertyValueFactory<>("cantMascotas"));
-        cantPersonas.setCellValueFactory(new PropertyValueFactory<>("cantPersonas"));
+        cantPersonas.setCellValueFactory(new PropertyValueFactory<>("cantPersona"));
     }
     
     public Pane getContenido() {

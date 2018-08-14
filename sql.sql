@@ -127,3 +127,18 @@ CREATE TRIGGER BORRARPARTICIPACIONES AFTER UPDATE ON actividades
 DELIMITER ;
 
 
+DELIMITER //
+CREATE PROCEDURE LISTAPAGOS (IN fechaI date, In fechaFin date)
+	BEGIN
+		SELECT h.Nombre, h.Apellido, T.MontoTotal
+        FROM Habitante h,
+							(SELECT p.idHabitante, sum(monto) as MontoTotal, idFactura
+							FROM Pago p
+							WHERE p.fecha >= fechaI and p.fecha <= fechaFin 
+							GROUP BY p.idHabitante) as T
+        WHERE h.idHabitante = T.idHabitante; 
+	END //
+DELIMITER ;
+
+
+CALL LISTAPAGOS('2018-08-01', '2018-08-10');
