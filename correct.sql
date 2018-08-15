@@ -173,7 +173,7 @@ DELIMITER //
 CREATE PROCEDURE USERAPARTMENTS(IN id INT)
 	BEGIN
 		SELECT *
-        FROM apartamentodisponibles
+        FROM apartamentosdisponibles
         where idDueno = id OR idHabitante = id;
     END//
 DELIMITER ;
@@ -182,7 +182,7 @@ DELIMITER //
 CREATE PROCEDURE APARTMENTBYID(IN id INT)
 	BEGIN
 		SELECT *
-        FROM apartamentodisponibles
+        FROM apartamentosdisponibles
         where idApartamento = id;
     END//
 DELIMITER ;UPDATEPAGO
@@ -201,7 +201,7 @@ CREATE PROCEDURE UPDATEDEPARTAMENTO(IN id INT, IN precion FLOAT, IN descripcionn
 		UPDATE apartamento SET precio = precion, estado = estadon, descripcion = descripcionn, idDueno = idDuenon, idHabitante = idHabitanten, cantMascotas = cantMascotasn, cantPersonas = cantPersonasn
         WHERE idApartamento = id;
     END //
-DELIMITER ;listadousuarios
+DELIMITER ;
 
 DELIMITER //
 CREATE PROCEDURE UPDATEUSER 

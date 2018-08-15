@@ -179,14 +179,15 @@ public final class EditDeleteApartamentoPane {
         String estadosc = estados.getText();
         Usuario propietariosb = UsuarioDB.getById(Integer.parseInt(propietarios.getText()));
         Usuario encargadosb = UsuarioDB.getById(Integer.parseInt(encargados.getText()));
-        Integer cantmt = Integer.parseInt(cantmascotas.getText());
-        Integer cantot = Integer.parseInt(cantPersonas.getText());
-
+        
         if(validar(String.valueOf(preciot), descripciont, estadosc, propietariosb)) 
             status.setText("Por favor llene todos los campos");
-        else if(estadosc.equals("Ocupado") && (encargadosb == null || cantmt.equals("") || cantot.equals("")))
+        else if(estadosc.equals("Ocupado") && (encargadosb == null || cantmascotas.getText().equals("") || cantPersonas.getText().equals("")))
             status.setText("Por favor llene todos los campos");
         else {
+            Integer cantmt = Integer.parseInt(cantmascotas.getText());
+            Integer cantot = Integer.parseInt(cantPersonas.getText());
+            
             Apartamento newApart = new Apartamento(id, preciot, descripciont, estadosc, propietariosb, encargadosb, cantmt, cantot);
             if(MensajesEmergentes.cofirmAccion("Desea guardar estos cambios?").get() == ButtonType.OK){
                 ApartamentoDB.actualizarApartamento(newApart);

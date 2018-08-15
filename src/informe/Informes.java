@@ -47,7 +47,8 @@ public class Informes {
             else if(combo.getValue().equals("Usuario")){
                 root.getChildren().removeIf((Node n)-> !(n instanceof ComboBox));
                 root.add(new InformeUsuario().getContenido(),0,1);
-            }else if(combo.getValue().equals("Pagos")){
+            }
+            else if(combo.getValue().equals("Pagos")){
                 root.getChildren().removeIf((Node n)-> !(n instanceof ComboBox));
                 root.add(new InformePagos().getRoot(), 0, 1);
             }

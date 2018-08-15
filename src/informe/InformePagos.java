@@ -41,7 +41,6 @@ public class InformePagos {
     private final BorderPane root;
     private final DatePicker inicio;
     private final DatePicker fin;
-    
     private final TableView<Reporte> tabla;
     private final TableColumn<Reporte, String> nombre;
     private final TableColumn<Reporte, String> apellido;
@@ -79,6 +78,7 @@ public class InformePagos {
         crearTabla();
         evtCheck();
         evtRadioButtons();
+        evtcargar();
     }
     
     private void top() {
@@ -175,6 +175,9 @@ public class InformePagos {
     private void evtRadioButtons() {
         anual.setOnAction(e -> {
             if(anual.isSelected()) {
+                cargar.setDisable(true);
+                inicio.setDisable(true);
+                fin.setDisable(true);
                 tabla.getItems().clear();
                 try {
                     List<Reporte> r = PagoBD.hacerReporte(LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
@@ -185,7 +188,46 @@ public class InformePagos {
                     Logger.getLogger(InformePagos.class.getName()).log(Level.SEVERE, null, ex);
                 }
             }
+        });
+        
+        mensual.setOnAction(e -> {
+            if(mensual.isSelected()) {
+                cargar.setDisable(true);
+                inicio.setDisable(true);
+                fin.setDisable(true);
+                tabla.getItems().clear();
+                try {
+                    List<Reporte> r = PagoBD.hacerReporte(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1),
+                                    LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 31));
+                    tabla.getItems().addAll(r);
+                    System.out.println(r);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InformePagos.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            }
+        });
+        
+        rango.setOnAction(e -> {
+            if(rango.isSelected()) {
+                cargar.setDisable(false);
+                inicio.setDisable(false);
+                fin.setDisable(false);
+            }
         }); 
     }
     
+    public void evtcargar(){
+        cargar.setOnAction(e -> {
+            if(inicio.getValue() != null && fin.getValue() != null){
+               tabla.getItems().clear();
+                try {
+                    List<Reporte> r = PagoBD.hacerReporte(inicio.getValue(),fin.getValue());
+                    tabla.getItems().addAll(r);
+                    System.out.println(r);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InformePagos.class.getName()).log(Level.SEVERE, null, ex);
+                } 
+            }
+        });
+    }    
 }

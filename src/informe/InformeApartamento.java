@@ -7,13 +7,15 @@ package informe;
 
 import apartamento.Apartamento;
 import apartamento.ApartamentoDB;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javafx.collections.ObservableList;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import usuarios.Usuario;
 
 /**
@@ -22,6 +24,9 @@ import usuarios.Usuario;
  */
 public class InformeApartamento {
     private final Pane root;
+    private final Label texto;
+    private final ComboBox<String> filtro;
+    private ObservableList<Apartamento> elementos;
     private final TableView<Apartamento> tabla;
     private final TableColumn<Apartamento, Integer> id;
     private final TableColumn<Apartamento, Float> precio;
@@ -34,6 +39,9 @@ public class InformeApartamento {
     
     public InformeApartamento(){
         root = new Pane();
+        filtro = new ComboBox<>();
+        texto = new Label("Filtrar por ");
+        opciones();        
         
         tabla = new TableView<>();
         id = new TableColumn<>("id Apartamento");
@@ -44,20 +52,16 @@ public class InformeApartamento {
         habitante = new TableColumn<>("Habitante");
         cantMascotas = new TableColumn<>("C. Mascotas");
         cantPersonas = new TableColumn<>("C. Personas");
-        editarTabla();        
+        editarTabla(); 
+        evtComboB();
         
-        try {
-            tabla.setItems(ApartamentoDB.getApartamentos());
-        } catch (SQLException ex) {
-            Logger.getLogger(Informes.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        root.getChildren().add(tabla);
+        tabla.setItems(ApartamentoDB.getApartamentos());
+        root.getChildren().addAll(new HBox(texto,filtro),tabla);
     }
     
-    public void editarTabla(){
+    private void editarTabla(){
         tabla.setEditable(true);
-        tabla.setTranslateX(10);
-        tabla.setTranslateY(10);
+        tabla.setTranslateY(40);
         tabla.setMaxSize(890, 870);
         
         id.setMinWidth(110);
@@ -77,7 +81,33 @@ public class InformeApartamento {
         duenio.setCellValueFactory(new PropertyValueFactory<>("owner"));
         habitante.setCellValueFactory(new PropertyValueFactory<>("habitante"));
         cantMascotas.setCellValueFactory(new PropertyValueFactory<>("cantMascotas"));
-        cantPersonas.setCellValueFactory(new PropertyValueFactory<>("cantPersona"));
+        cantPersonas.setCellValueFactory(new PropertyValueFactory<>("cantPersonas"));
+    }
+    
+    private void opciones(){
+        texto.setFont(new Font("Arial", 20));
+        filtro.getItems().add("Todo");
+        filtro.getItems().add("Ocupados");
+        filtro.getItems().add("Libres");
+        //filtro.getItems().add("Rango de precio");
+        //filtro.getItems().add("Por dueños");
+        
+        filtro.getSelectionModel().selectFirst();
+    }
+    
+    private void evtComboB(){
+        filtro.setOnAction(e -> {
+            if(filtro.getValue().equals("Todo")){
+                tabla.getItems().clear();
+                tabla.setItems(ApartamentoDB.getApartamentos());
+            }else if(filtro.getValue().equals("Libres")){
+                tabla.getItems().clear();
+                tabla.setItems(ApartamentoDB.getApartamentosLibres());
+            }else if(filtro.getValue().equals("Ocupados")){
+                tabla.getItems().clear();
+                tabla.getItems().addAll(ApartamentoDB.getApartamentosOcupados());
+            }
+        });
     }
     
     public Pane getContenido() {

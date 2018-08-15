@@ -22,7 +22,7 @@ public enum Factura {
     private final String tipo;
     private Factura(int id, String tipo) {
         this.id = id;
-          this.tipo = tipo;
+        this.tipo = tipo;
     }
     
     public static Factura getById(int id) {

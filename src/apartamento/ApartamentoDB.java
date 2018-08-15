@@ -11,6 +11,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import usuarios.UsuarioDB;
@@ -48,14 +50,53 @@ public class ApartamentoDB {
         return -1;
     }
     
-    public static ObservableList<Apartamento> getApartamentos() throws SQLException {
+    public static ObservableList<Apartamento> getApartamentos() {
         ObservableList<Apartamento> lista = FXCollections.observableArrayList();
-        String query = "SELECT * FROM apartamento";
-        ResultSet rs = DataBase.getStatement().executeQuery(query);
-        while(rs.next()){
-            lista.add(new Apartamento(rs.getInt(1), rs.getFloat(2), rs.getString(3), rs.getString(4),
-                                    UsuarioDB.getById(rs.getInt(5)), UsuarioDB.getById(rs.getInt(6)), 
-                                    rs.getInt(7), rs.getInt(8)));
+        String query = "SELECT * FROM apartamentosdisponibles";
+        ResultSet rs;
+        try {
+            rs = DataBase.getStatement().executeQuery(query);
+            while(rs.next()){
+                lista.add(new Apartamento(rs.getInt(1), rs.getFloat(2), rs.getString(3), rs.getString(4),
+                                        UsuarioDB.getById(rs.getInt(5)), UsuarioDB.getById(rs.getInt(6)), 
+                                        rs.getInt(7), rs.getInt(8)));
+            } 
+        }catch (SQLException ex) {
+            Logger.getLogger(ApartamentoDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
+    public static ObservableList<Apartamento> getApartamentosLibres() {
+        ObservableList<Apartamento> lista = FXCollections.observableArrayList();
+        String query = "SELECT * FROM apartamentosdisponibles WHERE estado= 'Libre'";
+        ResultSet rs;
+        try {
+            rs = DataBase.getStatement().executeQuery(query);
+            while(rs.next()){
+                lista.add(new Apartamento(rs.getInt(1), rs.getFloat(2), rs.getString(3), rs.getString(4),
+                                        UsuarioDB.getById(rs.getInt(5)), UsuarioDB.getById(rs.getInt(6)), 
+                                        rs.getInt(7), rs.getInt(8)));
+            } 
+        }catch (SQLException ex) {
+            Logger.getLogger(ApartamentoDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return lista;
+    }
+    
+    public static List<Apartamento> getApartamentosOcupados() {
+        List<Apartamento> lista = new LinkedList<>();
+        String query = "SELECT * FROM apartamentosdisponibles WHERE estado= 'Ocupado'";
+        ResultSet rs;
+        try {
+            rs = DataBase.getStatement().executeQuery(query);
+            while(rs.next()){
+                lista.add(new Apartamento(rs.getInt(1), rs.getFloat(2), rs.getString(3), rs.getString(4),
+                                        UsuarioDB.getById(rs.getInt(5)), UsuarioDB.getById(rs.getInt(6)), 
+                                        rs.getInt(7), rs.getInt(8)));
+            } 
+        }catch (SQLException ex) {
+            Logger.getLogger(ApartamentoDB.class.getName()).log(Level.SEVERE, null, ex);
         }
         return lista;
     }
