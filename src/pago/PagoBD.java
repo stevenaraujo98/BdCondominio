@@ -64,13 +64,32 @@ public class PagoBD {
     
     public static List<Reporte> hacerReporte(LocalDate fechaI, LocalDate fechaF) throws SQLException {
         String call = "CALL LISTAPAGOS (" + "'"+fechaI.format(DateTimeFormatter.ISO_LOCAL_DATE)+"'"+", "+
-                                        "'"+fechaI.format(DateTimeFormatter.ISO_LOCAL_DATE)+"')";
+                                        "'"+fechaF.format(DateTimeFormatter.ISO_LOCAL_DATE)+"')";
         ResultSet set = DataBase.getStatement().executeQuery(call);
         List<Reporte> lista = new LinkedList<>();
+        int i = 0;
         while(set.next()) {
-            lista.add(new Reporte(set.getString(1), set.getString(2), set.getFloat(3)));
+            Reporte r = new Reporte(set.getString(1), set.getString(2), null, null, null, null, null, 
+                    set.getFloat(3));
+            lista.add(r);
+            r.setTotalAlicuota(totalPorFactura(set.getInt(4), fechaI, fechaF, Factura.ALICUOTA));
+            r.setTotalAgua(totalPorFactura(set.getInt(4), fechaI, fechaF, Factura.AGUA));
+            r.setTotalElectricidad(totalPorFactura(set.getInt(4), fechaI, fechaF, Factura.ELECTRICIDAD));
+            r.setTotalMulta(totalPorFactura(set.getInt(4), fechaI, fechaF, Factura.MULTA));
+            r.setTotalTelefono(totalPorFactura(set.getInt(4), fechaI, fechaF, Factura.TELEFONO)); 
         }
+        
         return lista;
+    }
+    
+    public static float totalPorFactura(int idHab, LocalDate fechaI, LocalDate fechaF, Factura f) throws SQLException{
+        String call = "CALL PAGOSPORFACTURA (" + "'"+fechaI.format(DateTimeFormatter.ISO_LOCAL_DATE)+"'"+", "+
+                                        "'"+fechaF.format(DateTimeFormatter.ISO_LOCAL_DATE)+"', " 
+                                            + idHab + ", " + f.getId()+")";
+        ResultSet set = DataBase.getStatement().executeQuery(call);
+        if(set.next())
+            return set.getFloat(2);
+        return 0;
     }
     
 }

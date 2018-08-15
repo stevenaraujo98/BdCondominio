@@ -156,6 +156,35 @@ CREATE PROCEDURE LISTAPAGOSFACTURAS (IN fechaI date, In fechaFin date, IN idFact
 	END //
 DELIMITER ;
 
+#############################################################################################################
+drop procedure LISTAPAGOS;
+
+DELIMITER //
+CREATE PROCEDURE LISTAPAGOS (IN fechaI date, In fechaFin date)
+	BEGIN
+		SELECT h.Nombre, h.Apellido, T.MontoTotal, h.idHabitante
+        FROM Habitante h,
+							(SELECT p.idHabitante, sum(monto) as MontoTotal, idFactura
+							FROM Pago p
+							WHERE p.fecha >= fechaI and p.fecha <= fechaFin 
+							GROUP BY p.idHabitante) as T
+        WHERE h.idHabitante = T.idHabitante; 
+	END //
+DELIMITER ;
+
+
+
+DELIMITER //
+CREATE PROCEDURE PAGOSPORFACTURA (IN fechaI date, In fechaFin date, IN idHab int, IN idFact int)
+	BEGIN
+		SELECT p.idHabitante, sum(monto) as MontoTotal
+		FROM Pago p
+		WHERE p.fecha >= fechaI and p.fecha <= fechaFin and p.idFactura = idFact
+				and p.idHabitante = idHab
+		GROUP BY p.idHabitante;
+	END //
+DELIMITER ;
+
 
 
 

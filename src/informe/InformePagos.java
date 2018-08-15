@@ -5,6 +5,12 @@
  */
 package informe;
 
+import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.Month;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.DatePicker;
@@ -12,9 +18,11 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import pago.PagoBD;
 import pago.Reporte;
 
 
@@ -70,6 +78,7 @@ public class InformePagos {
         top();
         crearTabla();
         evtCheck();
+        evtRadioButtons();
     }
     
     private void top() {
@@ -101,7 +110,15 @@ public class InformePagos {
     }
 
     private void crearTabla() {
-        tabla.getColumns().addAll(nombre, apellido, fe, ft, fa, fal, fm, monto);
+        tabla.getColumns().addAll(nombre, apellido, fe, fa, ft, fal, fm, monto);
+        nombre.setCellValueFactory(new PropertyValueFactory<>("nombre")); 
+        apellido.setCellValueFactory(new PropertyValueFactory<>("apellido")); 
+        monto.setCellValueFactory(new PropertyValueFactory<>("monto")); 
+        fe.setCellValueFactory(new PropertyValueFactory<>("totalElectricidad")); 
+        fa.setCellValueFactory(new PropertyValueFactory<>("totalAgua")); 
+        ft.setCellValueFactory(new PropertyValueFactory<>("totalTelefono")); 
+        fal.setCellValueFactory(new PropertyValueFactory<>("totalAlucuota")); 
+        fm.setCellValueFactory(new PropertyValueFactory<>("totalMulta")); 
         root.setCenter(tabla); 
     }
 
@@ -115,23 +132,23 @@ public class InformePagos {
         }); 
         
         multas.setOnAction(e-> {
-            if(total.isSelected()) {
-                tabla.getColumns().add(fm);
+            if(multas.isSelected()) {
+                tabla.getColumns().add(fm);    
             }else{
                 tabla.getColumns().remove(fm);
             }
         }); 
         
         electricidad.setOnAction(e-> {
-            if(total.isSelected()) {
-                tabla.getColumns().add(fe);
+            if(electricidad.isSelected()) {
+                tabla.getColumns().add(fe);    
             }else{
                 tabla.getColumns().remove(fe);
             }
         }); 
         
         alicuotas.setOnAction(e-> {
-            if(total.isSelected()) {
+            if(alicuotas.isSelected()) {
                 tabla.getColumns().add(fal);
             }else{
                 tabla.getColumns().remove(fal);
@@ -139,18 +156,34 @@ public class InformePagos {
         }); 
         
         agua.setOnAction(e-> {
-            if(total.isSelected()) {
-                tabla.getColumns().add(fa);
+            if(agua.isSelected()) {
+                tabla.getColumns().add(fa);    
             }else{
                 tabla.getColumns().remove(fa);
             }
         }); 
         
         telefono.setOnAction(e-> {
-            if(total.isSelected()) {
-                tabla.getColumns().add(ft);
+            if(telefono.isSelected()) {
+                tabla.getColumns().add(ft);    
             }else{
                 tabla.getColumns().remove(ft);
+            }
+        }); 
+    }
+    
+    private void evtRadioButtons() {
+        anual.setOnAction(e -> {
+            if(anual.isSelected()) {
+                tabla.getItems().clear();
+                try {
+                    List<Reporte> r = PagoBD.hacerReporte(LocalDate.of(LocalDate.now().getYear(), Month.JANUARY, 1),
+                                    LocalDate.of(LocalDate.now().getYear(), Month.DECEMBER, 31));
+                    tabla.getItems().addAll(r);
+                    System.out.println(r);
+                } catch (SQLException ex) {
+                    Logger.getLogger(InformePagos.class.getName()).log(Level.SEVERE, null, ex);
+                }
             }
         }); 
     }
