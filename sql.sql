@@ -142,3 +142,35 @@ DELIMITER ;
 
 
 CALL LISTAPAGOS('2018-08-01', '2018-08-10');
+
+DELIMITER //
+CREATE PROCEDURE LISTAPAGOSFACTURAS (IN fechaI date, In fechaFin date, IN idFact int)
+	BEGIN
+		SELECT h.Nombre, h.Apellido, T.MontoTotal
+        FROM Habitante h,
+							(SELECT p.idHabitante, sum(monto) as MontoTotal
+							FROM Pago p
+							WHERE p.fecha >= fechaI and p.fecha <= fechaFin and p.idFactura = idFact
+							GROUP BY p.idHabitante) as T
+        WHERE h.idHabitante = T.idHabitante; 
+	END //
+DELIMITER ;
+
+
+
+
+CALL LISTAPAGOS('2018-08-01', '2018-08-10');
+CALL LISTAPAGOSFACTURAS('2018-08-01', '2018-08-10', 4);
+
+select * from pago;
+
+insert into pago (idFactura, idApartamento, idAdministrador, fecha, monto, idHabitante)
+			values(1, 9, 1, '2018-08-05', 30, 1);
+
+
+#Monto de facturas por habitante
+SELECT p.idHabitante, sum(monto) as Monto_por_factura
+FROM Pago p
+WHERE p.idFactura = 1
+GROUP BY idHabitante;
+        

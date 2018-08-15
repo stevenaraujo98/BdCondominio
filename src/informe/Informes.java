@@ -7,6 +7,7 @@ package informe;
 
 import java.util.LinkedList;
 import javafx.geometry.Insets;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
@@ -26,7 +27,8 @@ public class Informes {
         combo = new ComboBox<>();
         LinkedList<String> lista = new LinkedList<>();
         lista.add("Usuario");
-        lista.add("Apartamento");        
+        lista.add("Apartamento");
+        lista.add("Pagos");
         combo.getItems().setAll(lista);
         
         usuario = new InformeUsuario().getContenido();
@@ -39,10 +41,15 @@ public class Informes {
     public void accionar(){
         combo.setOnAction(e -> {
             if(combo.getValue().equals("Apartamento")){
+                root.getChildren().removeIf((Node n)-> !(n instanceof ComboBox));
                 root.add(new InformeApartamento().getContenido(),0,1);
             }
             else if(combo.getValue().equals("Usuario")){
+                root.getChildren().removeIf((Node n)-> !(n instanceof ComboBox));
                 root.add(new InformeUsuario().getContenido(),0,1);
+            }else if(combo.getValue().equals("Pagos")){
+                root.getChildren().removeIf((Node n)-> !(n instanceof ComboBox));
+                root.add(new InformePagos().getRoot(), 0, 1);
             }
         });
     }
