@@ -59,7 +59,9 @@ public final class EditDeleteApartamentoPane {
         cantPersonas = new TextField();
         
         borrar = new Button("Borrar");
+        borrar.setDisable(true);
         actualizar = new Button("Actualizar");
+        actualizar.setDisable(true);
         status = new Text("");
         hb = new HBox(borrar, actualizar);
         formato();
@@ -114,6 +116,8 @@ public final class EditDeleteApartamentoPane {
                 cantPersonas.setText(String.valueOf(a.getCantPersonas()));
                 disableTextos(true);
                 actualizar.setText("Actualizar");
+                borrar.setDisable(false);
+                actualizar.setDisable(false);
             }else{
                 precio.setText("");
                 descripcion.setText("");
