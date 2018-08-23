@@ -61,8 +61,6 @@ public class UserPane {
         menu = new MenuDrawing(
                 new ItemView("Facturas", 
                         new Image(AdminPane.class.getResourceAsStream("bill.png"), 30, 30, true, true)),
-                new ItemView("Consulta de estado de cuenta", 
-                        new Image(AdminPane.class.getResourceAsStream("account.png"), 30, 30, true, true)),
                 new ItemView("Apartamentos", 
                         new Image(AdminPane.class.getResourceAsStream("buscarApart.png"), 30, 30, true, true))
         );
@@ -82,20 +80,8 @@ public class UserPane {
                     root.setCenter(new PagoPane(user, false));
                     break;
                 case 1: 
-                    root.setCenter(new VBox(new Text("Segundo"))); 
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 18), "Prueba2", Color.WHITE);
-                    System.out.println("Segundo");
-                    stage.setTitle("User - Cuentas"); 
-                    break;
-                case 2:
                     stage.setTitle("User - Apartamentos"); 
                     root.setCenter(new UsuarioApartPane(user)); 
-                    break;
-                case 3:
-                    root.setCenter(new VBox(new Text("Tercero")));
-                    //calendar.addEvent(LocalDate.of(2018, Month.JULY, 17), "Prueba3", Color.RED);
-                    System.out.println("Tercero");
-                    stage.setTitle("User - Elecciones"); 
                     break;
                 default:
                     break;
