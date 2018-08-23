@@ -5,15 +5,16 @@
  */
 package informe;
 
-import apartamento.Apartamento;
-import apartamento.ApartamentoDB;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.Pane;
+import javafx.scene.text.Font;
 import usuarios.Usuario;
 import usuarios.UsuarioDB;
 
@@ -23,7 +24,8 @@ import usuarios.UsuarioDB;
  */
 public class InformeUsuario {
     private final Pane root;
-    
+    private final Label texto;
+    private final ComboBox<String> filtro;
     private final TableView<Usuario> tabla;
     private final TableColumn<Usuario, Integer> id;
     private final TableColumn<Usuario, String> user;
@@ -36,15 +38,18 @@ public class InformeUsuario {
     
     public InformeUsuario(){
         root = new Pane();
+        filtro = new ComboBox<>();
+        texto = new Label("Filtrar por ");
+        opciones();
         
         tabla = new TableView<>();
-        id = new TableColumn<>("id Usuario");
+        id = new TableColumn<>("Id");
         user = new TableColumn<>("Usuario");
         //password = new TableColumn<>("");
         name = new TableColumn<>("Name");
         lastname = new TableColumn<>("Apellido");
         email = new TableColumn<>("Correo");
-        telefono = new TableColumn<>("Telefono");
+        telefono = new TableColumn<>("Teléfono");
         tipo = new TableColumn<>("Tipo");
         editarTabla();        
         
@@ -54,6 +59,18 @@ public class InformeUsuario {
             Logger.getLogger(Informes.class.getName()).log(Level.SEVERE, null, ex);
         }
         root.getChildren().add(tabla);
+    }
+    
+    private void opciones(){
+        texto.setFont(new Font("Arial", 20));
+        filtro.getItems().add("Todo");
+        filtro.getItems().add("Dueños");
+        filtro.getItems().add("Habitantes");
+        filtro.getItems().add("Habitantes y Dueños");
+        //filtro.getItems().add("Rango de precio");
+        //filtro.getItems().add("Por dueños");
+        
+        filtro.getSelectionModel().selectFirst();
     }
     
     public void editarTabla(){

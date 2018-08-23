@@ -202,4 +202,53 @@ SELECT p.idHabitante, sum(monto) as Monto_por_factura
 FROM Pago p
 WHERE p.idFactura = 1
 GROUP BY idHabitante;
-        
+
+#Sugerencia========================================///////////////////////////
+DELIMITER //
+CREATE TRIGGER cambiarTipo_AI AFTER INSERT ON apartamento
+FOR EACH ROW
+BEGIN
+	UPDATE habitante SET tipo='Activo' WHERE idHabitante = new.idHabitante;
+END //
+DELIMITER;
+
+DELIMITER //
+CREATE TRIGGER quitar_AU AFTER UPDATE ON apartamento
+FOR EACH ROW
+BEGIN
+	@var = SELECT COUNT(idApartamento) 
+			FROM apartamento 
+            WHERE idHabitante = new.idHabitante;
+            
+	IF estado = 'Inhabilitado' THEN
+		IF @var = 1 THEN			
+			UPDATE habitante SET tipo='Inactivo' WHERE idHabitante = new.idHabitante;
+		END IF;
+	END IF;
+END //
+DELIMITER;
+
+
+SELECT h.idHabitante, h.Nombre, h.Apellido, h.Correo, a.idApartamento
+FROM habitante h, apartamentosdisponibles a
+WHERE h.idHabitante = a.idHabitante AND h.idHabitante NOT IN(SELECT h.idHabitante
+												FROM habitante h, apartamentosdisponibles a
+												WHERE h.idHabitante = a.idDueno);
+                                                
+SELECT h.idHabitante, h.Nombre, h.Apellido, h.Correo, a.idApartamento
+FROM habitante h, apartamentosdisponibles a
+WHERE h.idHabitante = a.idDueno AND h.idHabitante NOT IN(SELECT h.idHabitante
+												FROM habitante h, apartamentosdisponibles a
+												WHERE h.idHabitante = a.idHabitante);
+                                                
+SELECT h.idHabitante, h.Nombre, h.Apellido, h.Correo, a.idApartamento
+FROM habitante h, apartamentosdisponibles a
+WHERE h.idHabitante = a.idHabitante;
+
+SELECT h.idHabitante, h.Nombre, h.Apellido, h.Correo, a.idApartamento
+FROM habitante h, apartamentosdisponibles a
+WHERE h.idHabitante = a.idDueno
+
+SELECT h.idHabitante, h.Nombre, h.Apellido, h.Correo, a.idApartamento
+FROM habitante h, apartamentosdisponibles a
+WHERE h.idHabitante = a.idDueño AND idHabitante = 0;

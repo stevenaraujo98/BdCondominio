@@ -59,7 +59,7 @@ public class ApartamentoPane {
     }
     
     private void crearPane() {
-        grid.addColumn(0, new Text("Precio"), new Text("Descripcion"), new Text("Estados"), new Text("Propetarios"),
+        grid.addColumn(0, new Text("Precio"), new Text("Descripción"), new Text("Estados"), new Text("Propetarios"),
                 new Text("Encargados"), new Text("Cantidad mascotas"), new Text("Cantidad personas"));
         grid.addColumn(1, precio, descripcion, estados, propietarios, encargados, cantmascotas, cantPersonas,status,save);
         descripcion.setMaxHeight(70);

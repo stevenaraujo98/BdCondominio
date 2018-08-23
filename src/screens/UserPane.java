@@ -64,9 +64,8 @@ public class UserPane {
                 new ItemView("Consulta de estado de cuenta", 
                         new Image(AdminPane.class.getResourceAsStream("account.png"), 30, 30, true, true)),
                 new ItemView("Apartamentos", 
-                        new Image(AdminPane.class.getResourceAsStream("buscarApart.png"), 30, 30, true, true)),
-                new ItemView("Elecciones", 
-                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true)));
+                        new Image(AdminPane.class.getResourceAsStream("buscarApart.png"), 30, 30, true, true))
+        );
         
         root.setRight(new VBox(new Rectangle(10, 5, Color.TRANSPARENT), menu)); 
         root.setBackground(new Background(new BackgroundFill(Color.WHITE, CornerRadii.EMPTY, Insets.EMPTY)));

@@ -75,9 +75,7 @@ public class AdminPane {
                 new ItemView("Consultar actividades", 
                         new Image(AdminPane.class.getResourceAsStream("buscarActi.png"), 30, 30, true, true)),
                 new ItemView("Informes", 
-                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true)),
-                new ItemView("Elecciones", 
-                        new Image(AdminPane.class.getResourceAsStream("box.png"), 30, 30, true, true))
+                        new Image(AdminPane.class.getResourceAsStream("tarea.png"), 30, 30, true, true))
         );
         
         root.setRight(new VBox(new Rectangle(10, 5, Color.TRANSPARENT), menu)); 
@@ -121,11 +119,6 @@ public class AdminPane {
                 case 7:
                     stage.setTitle("Admin - Informes");
                     root.setCenter(new Informes().getContenido());
-                    break;
-                case 8:
-                    root.setCenter(new VBox(new Text("Quinto")));
-                    System.out.println("Quinto");
-                    stage.setTitle("Admin - Elecciones");
                     break;
                 default:
                     break;

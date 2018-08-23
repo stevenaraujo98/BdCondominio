@@ -68,7 +68,7 @@ public final class EditDeleteApartamentoPane {
         borrarDato();
         actualizarDato();
         
-        root.addColumn(0, combo, new Text("Precio"), new Text("Descripcion"), new Text("Estados"), new Text("Propetarios"),
+        root.addColumn(0, combo, new Text("Precio"), new Text("Descripción"), new Text("Estados"), new Text("Propetarios"),
                 new Text("Encargados"), new Text("Cantidad mascotas"), new Text("Cantidad personas"), status,hb);
         root.addColumn(1, new Label(), precio, descripcion, estados, propietarios, encargados, cantmascotas, cantPersonas);
     }

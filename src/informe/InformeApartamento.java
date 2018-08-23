@@ -41,12 +41,12 @@ public class InformeApartamento {
         root = new Pane();
         filtro = new ComboBox<>();
         texto = new Label("Filtrar por ");
-        opciones();        
+        opciones();
         
         tabla = new TableView<>();
-        id = new TableColumn<>("id Apartamento");
+        id = new TableColumn<>("Id");
         precio = new TableColumn<>("Precio");
-        descripcion = new TableColumn<>("Descripcion");
+        descripcion = new TableColumn<>("Descripción");
         estado = new TableColumn<>("Estado");
         duenio = new TableColumn<>("Dueños");
         habitante = new TableColumn<>("Habitante");
